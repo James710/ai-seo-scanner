@@ -26,7 +26,6 @@
       padding: 12px;
       border-radius: 6px;
       border: none;
-      font-size: 14px;
     }
 
     button {
@@ -67,142 +66,165 @@
       margin-top: 10px;
     }
 
-    .orange { color: #f97316; }
-    .green { color: #16a34a; }
-    .blue { color: #2563eb; }
-
-    .section {
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
       margin-top: 25px;
     }
 
     canvas {
-      height: 300px !important;
+      height: 260px !important;
     }
+
+    .section-title {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 
 <body>
 
 <div class="header">
-  <h1>AI SEO Brain — Enterprise Dashboard</h1>
+  <h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
 
   <div style="display:flex; gap:10px; margin-top:10px;">
-    <input value="https://www.eazydrivemarketing.com/">
-    <button>Run AI Scan</button>
+    <input value="https://www.coopsbbq.com/">
+    <button>🚀 Run AI Scan</button>
   </div>
 </div>
 
 <div class="banner">
-  <strong>Enterprise Demo Mode</strong><br><br>
+  <strong>⚙️ Enterprise Demo Mode</strong><br><br>
 
-  This system represents the full AI SEO Brain platform used in production.<br><br>
+  AI SEO Brain uses a decision engine that selects from <b>40+ SEO toolkits</b> to optimize websites.<br><br>
 
-  The real system:
-  <br>• Scans up to 25 pages per website
-  <br>• Analyzes technical, content, and authority signals
-  <br>• Uses an AI decision engine to select from <b>40+ SEO toolkits</b>
-  <br>• Generates step-by-step implementation instructions
-  <br>• Recommends the top 3 toolkits per scan
-  <br>• Tracks improvement across multiple scan cycles
-  <br>• Builds a full 8-page enterprise SEO report
-  <br><br>
-
-  ⚠ SEO improvement is progressive — reaching top performance typically requires multiple scans, toolkit deployments, and ongoing optimization cycles.
+  ✔ Multi-page crawl (25 pages)<br>
+  ✔ Technical + content + authority scoring<br>
+  ✔ AI keyword modeling<br>
+  ✔ Page-level optimization instructions<br>
+  ✔ Multi-scan improvement tracking<br>
+  ✔ Traffic + ranking projections<br>
+  ✔ Full 8-page enterprise SEO report
 </div>
 
 <div class="grid">
+  <div class="card">📈 SEO Score<div class="metric" style="color:#f97316;">82</div></div>
+  <div class="card">🎯 Projected Score<div class="metric" style="color:#16a34a;">91</div></div>
+  <div class="card">⚡ Improvement<div class="metric" style="color:#2563eb;">+9%</div></div>
+  <div class="card">⚠ Issues Found<div class="metric">8</div></div>
+</div>
+
+<div class="section-title">📊 Performance Analytics</div>
+
+<div class="charts">
   <div class="card">
-    SEO Score
-    <div class="metric orange">85</div>
+    <b>SEO Growth</b>
+    <canvas id="growthChart"></canvas>
   </div>
 
   <div class="card">
-    Projected Score (Next Phase)
-    <div class="metric green">92</div>
+    <b>Issue Breakdown</b>
+    <canvas id="issueChart"></canvas>
   </div>
 
   <div class="card">
-    Improvement Potential
-    <div class="metric blue">+8%</div>
+    <b>Keyword Ranking</b>
+    <canvas id="keywordChart"></canvas>
   </div>
 
   <div class="card">
-    Issues Found
-    <div class="metric">7</div>
+    <b>Traffic Projection</b>
+    <canvas id="trafficChart"></canvas>
   </div>
 </div>
 
-<div class="section">
-  <h3>SEO Growth Projection (Multi-Scan)</h3>
-  <canvas id="growthChart"></canvas>
+<div class="section-title">🧠 Selected Toolkits</div>
+
+<div class="card">
+  ✔ Local SEO Toolkit → Improve Google Maps rankings + local visibility<br>
+  ✔ Content Optimization Toolkit → Target BBQ + restaurant keywords<br>
+  ✔ Reputation & Reviews Toolkit → Increase customer trust + CTR
 </div>
 
-<div class="section">
-  <h3>Issue Breakdown</h3>
-  <canvas id="issueChart"></canvas>
+<div class="section-title">🚨 Critical Issues</div>
+
+<div class="card">
+  • Missing location-based keywords (San Diego BBQ)<br>
+  • Weak Google Business Profile optimization<br>
+  • Inconsistent NAP (Name/Address/Phone)<br>
+  • Limited menu keyword indexing<br>
+  • No structured data (restaurant schema)<br>
+  • Low review volume vs competitors<br>
+  • Slow mobile performance<br>
+  • Missing alt text on food images
 </div>
 
-<div class="section">
-  <h3>Keyword Ranking Growth</h3>
-  <canvas id="keywordChart"></canvas>
-</div>
+<div class="section-title">📄 Page-Level Optimization</div>
 
-<div class="section">
-  <h3>Traffic Projection</h3>
-  <canvas id="trafficChart"></canvas>
+<div class="card">
+  <b>Homepage</b><br>
+  Keyword: BBQ Restaurant San Diego<br>
+  Fix: Add H1, include location keywords, optimize homepage copy<br><br>
+
+  <b>Menu Page</b><br>
+  Keyword: Best BBQ Menu San Diego<br>
+  Fix: Add structured data, keyword-rich descriptions, image SEO<br><br>
+
+  <b>Location Page</b><br>
+  Keyword: BBQ Near Me San Diego<br>
+  Fix: Improve local schema, embed map, add reviews section
 </div>
 
 <script>
 
-// REALISTIC MULTI-STAGE GROWTH
 new Chart(document.getElementById('growthChart'), {
   type: 'line',
   data: {
-    labels: ['Current', 'After Scan 1', 'After Scan 2', 'After Scan 3'],
+    labels: ['Current','Scan 1','Scan 2','Scan 3'],
     datasets: [{
-      label: 'SEO Score Progression',
-      data: [85, 92, 96, 99],
+      label: 'SEO Score',
+      data: [82, 87, 91, 95],
       borderColor: '#16a34a',
       tension: 0.4
     }]
   }
 });
 
-// ISSUE DISTRIBUTION
 new Chart(document.getElementById('issueChart'), {
   type: 'bar',
   data: {
-    labels: ['Technical', 'Content', 'Local', 'Authority'],
+    labels: ['Technical','Content','Local','Authority'],
     datasets: [{
-      label: 'Issue Weight',
-      data: [30, 25, 20, 15],
+      data: [28,22,30,15],
       backgroundColor: ['#2563eb','#16a34a','#f97316','#9333ea']
     }]
   }
 });
 
-// KEYWORD IMPROVEMENT OVER TIME
 new Chart(document.getElementById('keywordChart'), {
   type: 'line',
   data: {
     labels: ['Week 1','Week 2','Week 3','Week 4'],
     datasets: [{
-      label: 'Keyword Rank Position',
-      data: [52, 41, 28, 18],
+      label: 'Keyword Rank',
+      data: [48, 35, 25, 15],
       borderColor: '#2563eb',
       tension: 0.4
     }]
   }
 });
 
-// TRAFFIC GROWTH
 new Chart(document.getElementById('trafficChart'), {
   type: 'bar',
   data: {
-    labels: ['Current','After Optimization'],
+    labels: ['Current','Projected'],
     datasets: [{
-      label: 'Monthly Traffic',
-      data: [3200, 5400],
+      label: 'Monthly Visitors',
+      data: [2200, 4200],
       backgroundColor: ['#94a3b8','#2563eb']
     }]
   }

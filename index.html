@@ -12,7 +12,6 @@ body{
   background:#f4f6f9;
 }
 
-/* 🔥 WIDER — NOT CRAMPED */
 .container{
   max-width:1400px;
   margin:auto;
@@ -27,7 +26,7 @@ body{
 }
 
 .header input{
-  width:75%;
+  width:70%;
   padding:12px;
   border-radius:6px;
   border:none;
@@ -94,7 +93,7 @@ canvas{
   padding:10px;
 }
 
-/* 🔥 FULL SCREEN SCAN OVERLAY */
+/* SCAN OVERLAY */
 .scan-overlay{
   position:fixed;
   top:0;
@@ -115,19 +114,28 @@ canvas{
   margin-bottom:20px;
 }
 
-.scan-text{
-  font-size:16px;
-  opacity:.85;
+.toolkits{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+  margin-top:20px;
+}
+
+.page-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+  margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 SCAN OVERLAY -->
+<!-- SCAN OVERLAY -->
 <div id="scanOverlay" class="scan-overlay">
   <img src="AI+SEO+Innovation.gif">
-  <div id="scanText" class="scan-text">Initializing AI SEO Brain...</div>
+  <div id="scanText">Initializing AI SEO Brain...</div>
 </div>
 
 <div class="container">
@@ -148,6 +156,7 @@ Enter any website URL to simulate a full AI SEO scan
 25-page crawl • Technical + Content + Local SEO • 40+ toolkit AI engine • Page-level fixes • Traffic + ranking projections • Full enterprise report
 </div>
 
+<!-- METRICS -->
 <div class="grid">
 <div class="card">SEO Score<div id="score" class="metric orange">--</div></div>
 <div class="card">Projected<div id="projected" class="metric green">--</div></div>
@@ -155,6 +164,7 @@ Enter any website URL to simulate a full AI SEO scan
 <div class="card">Issues<div id="issues" class="metric">--</div></div>
 </div>
 
+<!-- CHARTS -->
 <div class="charts">
 <div class="chart-box"><canvas id="c1"></canvas></div>
 <div class="chart-box"><canvas id="c2"></canvas></div>
@@ -162,9 +172,95 @@ Enter any website URL to simulate a full AI SEO scan
 <div class="chart-box"><canvas id="c4"></canvas></div>
 </div>
 
+<!-- TOOLKITS -->
+<div id="toolkitsSection" style="display:none;">
+<h3>🧠 AI-Selected Toolkits</h3>
+
+<div class="toolkits">
+
+<div class="card">
+<h4>🔧 Technical SEO Toolkit</h4>
+<ul>
+<li>Fix metadata & indexing</li>
+<li>Improve site speed</li>
+<li>Resolve technical errors</li>
+</ul>
+<b>Impact: +8 SEO Score</b>
+</div>
+
+<div class="card">
+<h4>📈 Content Optimization Toolkit</h4>
+<ul>
+<li>Improve keyword targeting</li>
+<li>Expand content depth</li>
+<li>Increase topical authority</li>
+</ul>
+<b>Impact: +5 Ranking Gain</b>
+</div>
+
+<div class="card">
+<h4>📍 Local SEO Toolkit</h4>
+<ul>
+<li>Optimize local keywords</li>
+<li>Improve map visibility</li>
+<li>Strengthen geo signals</li>
+</ul>
+<b>Impact: +32% Visibility</b>
+</div>
+
+</div>
+</div>
+
+<!-- PAGE ANALYSIS -->
+<div id="pageAnalysis" style="display:none; margin-top:25px;">
+
+<h3>📄 Page-Level Issues & Fix Plan (Demo)</h3>
+
+<div class="notice">
+Showing 3 pages for demo. Full system scans up to <b>25 pages</b> and generates complete fix instructions.
+</div>
+
+<div class="page-grid">
+
+<div class="card">
+<h4>Homepage</h4>
+<ul>
+<li>No H1 tag → Content Toolkit</li>
+<li>Missing alt text → Technical Toolkit</li>
+<li>Weak keywords → Content Toolkit</li>
+</ul>
+</div>
+
+<div class="card">
+<h4>Menu Page</h4>
+<ul>
+<li>Duplicate titles → Technical Toolkit</li>
+<li>Thin content → Content Toolkit</li>
+<li>No linking → Content Toolkit</li>
+</ul>
+</div>
+
+<div class="card">
+<h4>Location Page</h4>
+<ul>
+<li>No geo keywords → Local Toolkit</li>
+<li>No schema → Technical Toolkit</li>
+<li>Low local ranking → Local Toolkit</li>
+</ul>
+</div>
+
+</div>
+
+<div class="notice">
+💡 Most websites require 3–5 optimization cycles using AI SEO Brain to reach peak performance.
+</div>
+
+</div>
+
 </div>
 
 <script>
+
 let charts=[];
 
 function runScan(){
@@ -174,26 +270,23 @@ const text = document.getElementById("scanText");
 
 overlay.style.display="flex";
 
-text.innerText="Initializing AI SEO Brain...";
+text.innerText="Initializing...";
 setTimeout(()=>{text.innerText="Crawling 25 pages...";},800);
-setTimeout(()=>{text.innerText="Analyzing SEO signals...";},1600);
-setTimeout(()=>{text.innerText="Selecting optimal toolkits...";},2400);
+setTimeout(()=>{text.innerText="Analyzing SEO...";},1600);
+setTimeout(()=>{text.innerText="Selecting toolkits...";},2400);
 
 setTimeout(()=>{
 
 overlay.style.display="none";
 
-// 🔥 REALISTIC DATA
-score.innerText = 74;
-projected.innerText = 88;
-improvement.innerText = "+14%";
-issues.innerText = 27;
+score.innerText=74;
+projected.innerText=88;
+improvement.innerText="+14%";
+issues.innerText=27;
 
-// reset charts
 charts.forEach(c=>c.destroy());
 charts=[];
 
-// SEO Growth
 charts.push(new Chart(c1,{
 type:"line",
 data:{
@@ -208,7 +301,6 @@ fill:true
 }
 }));
 
-// Issue Breakdown
 charts.push(new Chart(c2,{
 type:"bar",
 data:{
@@ -221,13 +313,12 @@ backgroundColor:["#2563eb","#16a34a","#f97316","#9333ea"]
 }
 }));
 
-// Keyword Growth
 charts.push(new Chart(c3,{
 type:"line",
 data:{
 labels:["Week1","Week2","Week3","Week4"],
 datasets:[{
-label:"Ranking Position",
+label:"Ranking",
 data:[52,40,28,18],
 borderColor:"#2563eb",
 backgroundColor:"rgba(37,99,235,.2)",
@@ -236,7 +327,6 @@ fill:true
 }
 }));
 
-// Traffic Projection
 charts.push(new Chart(c4,{
 type:"bar",
 data:{
@@ -249,8 +339,12 @@ backgroundColor:["#94a3b8","#2563eb"]
 }
 }));
 
+document.getElementById("toolkitsSection").style.display="block";
+document.getElementById("pageAnalysis").style.display="block";
+
 },3000);
 }
+
 </script>
 
 </body>

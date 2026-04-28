@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI SEO Brain — Enterprise Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-body {<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI SEO Brain — Enterprise Dashboard</title>
@@ -50,7 +41,6 @@ button {
   border-radius:6px;
   background:#2d6cdf;
   color:white;
-  cursor:pointer;
 }
 
 .grid {
@@ -88,7 +78,7 @@ canvas {
   height:180px !important;
 }
 
-/* ===== LOADER ===== */
+/* LOADER */
 .loader {
   display:none;
   text-align:center;
@@ -96,10 +86,16 @@ canvas {
 }
 
 .loader img {
-  width:220px;
+  width:180px;
 }
 
-/* ===== PRICING ===== */
+/* DEMO BUTTONS */
+.demo-btn {
+  background:#bdc3c7;
+  color:#555;
+  cursor:not-allowed;
+}
+
 .pricing {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -121,10 +117,6 @@ canvas {
   margin:10px 0;
 }
 
-.cta {
-  background:#27ae60;
-}
-
 </style>
 </head>
 
@@ -136,7 +128,7 @@ canvas {
 <div class="header">
 <h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
 
-<input id="urlInput" value="https://www.coopsbbq.com/">
+<input value="https://www.coopsbbq.com/">
 <button onclick="runScan()">🚀 Run AI Scan</button>
 
 <div style="margin-top:8px;font-size:13px;">
@@ -146,7 +138,7 @@ Enter any website URL to simulate a full AI SEO scan
 
 <!-- LOADER -->
 <div class="loader" id="loader">
-<img src="ai-seo-brain.gif">
+<img src="./scan.gif" alt="Scanning...">
 <p>Scanning website with AI SEO Brain...</p>
 </div>
 
@@ -179,7 +171,7 @@ Enter any website URL to simulate a full AI SEO scan
 </ul>
 </div>
 
-<!-- PAGE FIXES -->
+<!-- PAGE FIX -->
 <div class="section" id="pages" style="display:none;">
 <h2>📄 Page-Level Fix Plan</h2>
 <ul>
@@ -189,7 +181,7 @@ Enter any website URL to simulate a full AI SEO scan
 </ul>
 </div>
 
-<!-- MONETIZATION -->
+<!-- PRICING -->
 <div class="section" id="pricing" style="display:none;">
 <h2>💰 Purchase Recommended Toolkits</h2>
 
@@ -198,30 +190,25 @@ Enter any website URL to simulate a full AI SEO scan
 <div class="price-card">
 <h3>1 Toolkit</h3>
 <div class="price">$99</div>
-<p>Fix your biggest SEO issue</p>
-<button class="cta" onclick="buy(1)">Buy Now</button>
+<button class="demo-btn">Demo Only</button>
 </div>
 
 <div class="price-card">
 <h3>2 Toolkits</h3>
 <div class="price">$198</div>
-<p>Accelerate SEO growth</p>
-<button class="cta" onclick="buy(2)">Buy Now</button>
+<button class="demo-btn">Demo Only</button>
 </div>
 
 <div class="price-card">
 <h3>3 Toolkits</h3>
 <div class="price">$249</div>
-<p>Full optimization recommended</p>
-<button class="cta" onclick="buy(3)">Buy Now</button>
+<button class="demo-btn">Demo Only</button>
 </div>
 
 </div>
 
-<p style="margin-top:10px;font-size:13px;color:#555;">
-✔ Secure Stripe checkout<br>
-✔ Instant email delivery<br>
-✔ Full 25-page report + instructions
+<p style="font-size:13px;margin-top:10px;">
+Demo only — payments disabled
 </p>
 
 </div>
@@ -230,16 +217,15 @@ Enter any website URL to simulate a full AI SEO scan
 
 <script>
 
-let charts = [];
+let charts=[];
 
 function runScan(){
 
 document.getElementById("loader").style.display="block";
 
-// reset
-document.getElementById("toolkits").style.display="none";
-document.getElementById("pages").style.display="none";
-document.getElementById("pricing").style.display="none";
+// clear charts
+charts.forEach(c=>c.destroy());
+charts=[];
 
 setTimeout(()=>{
 
@@ -250,13 +236,10 @@ document.getElementById("projected").innerText="88";
 document.getElementById("improve").innerText="+14%";
 document.getElementById("issues").innerText="27";
 
-charts.forEach(c=>c.destroy());
-charts=[];
-
 charts.push(new Chart(growth,{
 type:"line",
 data:{labels:["Now","Scan1","Scan2","Scan3"],
-datasets:[{label:"SEO Score",data:[74,80,84,88]}]}
+datasets:[{data:[74,80,84,88]}]}
 }));
 
 charts.push(new Chart(issuesChart,{
@@ -282,282 +265,6 @@ document.getElementById("pages").style.display="block";
 document.getElementById("pricing").style.display="block";
 
 },3000);
-
-}
-
-function buy(n){
-
-const links={
-1:"https://buy.stripe.com/YOUR_LINK_1",
-2:"https://buy.stripe.com/YOUR_LINK_2",
-3:"https://buy.stripe.com/YOUR_LINK_3"
-};
-
-window.open(links[n]);
-
-}
-
-</script>
-
-</body>
-</html>
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#f4f7fb;
-}
-
-.container {
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
-}
-
-.header {
-  background:#243f63;
-  color:white;
-  padding:20px;
-  border-radius:10px;
-}
-
-input {
-  width:70%;
-  padding:10px;
-  border-radius:6px;
-  border:none;
-}
-
-button {
-  padding:10px 16px;
-  border:none;
-  border-radius:6px;
-  background:#2d6cdf;
-  color:white;
-  cursor:pointer;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-top:15px;
-}
-
-.card {
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
-
-.metric {
-  font-size:24px;
-  font-weight:bold;
-}
-
-.orange { color:#e67e22; }
-.green { color:#27ae60; }
-.blue { color:#2d6cdf; }
-
-.section {
-  margin-top:20px;
-}
-
-.two-col {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-
-canvas {
-  height:180px !important;
-}
-
-/* ===== MONETIZATION ===== */
-.paywall {
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  margin-top:25px;
-  text-align:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-
-.pricing {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  margin-top:20px;
-}
-
-.price-card {
-  background:#fff;
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-
-.price {
-  font-size:28px;
-  font-weight:bold;
-  margin:10px 0;
-}
-
-.cta {
-  background:#27ae60;
-  margin-top:10px;
-}
-
-/* LOCKED OVERLAY */
-.locked {
-  position:relative;
-}
-
-.locked::after {
-  content:"🔒 Locked — Upgrade to Unlock Full Report";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(255,255,255,0.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:18px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
-<h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
-<input value="https://www.coopsbbq.com/" />
-<button onclick="runScan()">🚀 Run AI Scan</button>
-</div>
-
-<!-- METRICS -->
-<div class="grid">
-<div class="card"><h3>SEO Score</h3><div id="score" class="metric orange">--</div></div>
-<div class="card"><h3>Projected</h3><div id="projected" class="metric green">--</div></div>
-<div class="card"><h3>Improvement</h3><div id="improve" class="metric blue">--</div></div>
-<div class="card"><h3>Issues</h3><div id="issues" class="metric">--</div></div>
-</div>
-
-<!-- CHARTS -->
-<div class="section two-col">
-<div class="card"><canvas id="growth"></canvas></div>
-<div class="card"><canvas id="issuesChart"></canvas></div>
-</div>
-
-<div class="section two-col">
-<div class="card"><canvas id="keywords"></canvas></div>
-<div class="card"><canvas id="traffic"></canvas></div>
-</div>
-
-<!-- TOOLKITS -->
-<div class="section locked" id="toolkits">
-<h2>🧠 AI-Selected Toolkits</h2>
-<p>Top 3 toolkits selected to fix your SEO issues</p>
-</div>
-
-<!-- PAGE FIXES -->
-<div class="section locked" id="pages">
-<h2>📄 Page-Level Fix Plan</h2>
-<p>Detailed fixes for each page</p>
-</div>
-
-<!-- PAYWALL -->
-<div class="paywall">
-<h2>🚀 Unlock Full AI SEO Report</h2>
-<p>This demo shows limited results. Unlock full 25-page analysis, toolkits, and fix instructions.</p>
-
-<div class="pricing">
-
-<div class="price-card">
-<h3>Starter Scan</h3>
-<div class="price">$29</div>
-<p>Full SEO scan<br>Top 3 toolkits<br>Basic fix plan</p>
-<button class="cta">Buy Now</button>
-</div>
-
-<div class="price-card">
-<h3>Growth Plan</h3>
-<div class="price">$79</div>
-<p>Full report (25 pages)<br>All issues<br>Advanced fixes<br>Keyword strategy</p>
-<button class="cta">Buy Now</button>
-</div>
-
-<div class="price-card">
-<h3>Enterprise</h3>
-<div class="price">$149</div>
-<p>Everything included<br>Priority analysis<br>Revenue forecasting<br>Strategy blueprint</p>
-<button class="cta">Buy Now</button>
-</div>
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-function runScan(){
-
-document.getElementById("score").innerText="74";
-document.getElementById("projected").innerText="88";
-document.getElementById("improve").innerText="+14%";
-document.getElementById("issues").innerText="27";
-
-document.getElementById("toolkits").classList.remove("locked");
-document.getElementById("pages").classList.remove("locked");
-
-document.getElementById("toolkits").innerHTML = `
-<h2>🧠 AI-Selected Toolkits</h2>
-<ul>
-<li><b>Technical SEO Toolkit</b> → Fix speed, indexing, metadata</li>
-<li><b>Content Optimization Toolkit</b> → Improve keywords & rankings</li>
-<li><b>Local SEO Toolkit</b> → Boost local visibility</li>
-</ul>
-`;
-
-document.getElementById("pages").innerHTML = `
-<h2>📄 Page-Level Fix Plan</h2>
-<ul>
-<li><b>Homepage</b> → Missing H1, weak keywords</li>
-<li><b>Menu Page</b> → Duplicate titles, thin content</li>
-<li><b>Location Page</b> → No geo keywords</li>
-</ul>
-`;
-
-// Charts
-new Chart(document.getElementById("growth"), {
-type:"line",
-data:{labels:["Now","Scan1","Scan2","Scan3"],
-datasets:[{label:"SEO Score", data:[74,80,84,88]}]}
-});
-
-new Chart(document.getElementById("issuesChart"), {
-type:"bar",
-data:{labels:["Technical","Content","Local","Authority"],
-datasets:[{data:[40,30,20,10]}]}
-});
-
-new Chart(document.getElementById("keywords"), {
-type:"line",
-data:{labels:["Week1","Week2","Week3","Week4"],
-datasets:[{data:[50,40,28,18]}]}
-});
-
-new Chart(document.getElementById("traffic"), {
-type:"bar",
-data:{labels:["Current","Projected"],
-datasets:[{data:[1800,4200]}]}
-});
 
 }
 

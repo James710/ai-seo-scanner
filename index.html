@@ -81,14 +81,13 @@ button {
 
 canvas { height:260px !important; }
 
-.hidden { display:none }
-
 .loader {
   margin-top:20px;
   padding:20px;
   background:white;
   border-radius:10px;
   font-weight:bold;
+  display:none;
 }
 </style>
 </head>
@@ -100,30 +99,38 @@ canvas { height:260px !important; }
 
   <div class="scan-row">
     <input id="url" value="https://www.coopsbbq.com/">
-    <button onclick="scan()">🚀 Run AI Scan</button>
+    <button onclick="runScan()">🚀 Run AI Scan</button>
+  </div>
+
+  <div style="margin-top:8px;font-size:13px;opacity:.85;">
+    You can enter <b>any website URL</b> to simulate a full AI SEO scan and enterprise report output.
   </div>
 </div>
 
 <div class="banner">
 <b>Enterprise Demo Mode</b><br><br>
-AI SEO Brain scans up to 25 pages, analyzes technical + content + local SEO, selects from 40+ toolkits, and generates full enterprise SEO reports with projections and page-level fixes.
+Simulated output of full AI SEO Brain system:
+• 25-page crawl  
+• Technical + content + local SEO scoring  
+• 40+ toolkit decision engine  
+• Page-level optimization  
+• Traffic + ranking projections  
+• Full 8-page SEO report generation
 </div>
 
-<!-- LOADER -->
-<div id="loader" class="loader hidden">
-Scanning website… analyzing pages, keywords, toolkits, and ranking projections…
+<div id="loader" class="loader">
+Scanning website… analyzing SEO, keywords, pages, toolkits, and projections…
 </div>
 
-<!-- RESULTS -->
-<div id="results" class="hidden">
-
+<!-- METRICS -->
 <div class="grid">
-<div class="card">SEO Score<div id="score" class="metric orange">82</div></div>
-<div class="card">Projected Score<div id="projected" class="metric green">91</div></div>
-<div class="card">Improvement<div id="improvement" class="metric blue">+9%</div></div>
-<div class="card">Issues Found<div id="issues" class="metric">8</div></div>
+<div class="card">SEO Score<div id="score" class="metric orange">--</div></div>
+<div class="card">Projected Score<div id="projected" class="metric green">--</div></div>
+<div class="card">Improvement<div id="improvement" class="metric blue">--</div></div>
+<div class="card">Issues Found<div id="issues" class="metric">--</div></div>
 </div>
 
+<!-- CHARTS (VISIBLE BEFORE SCAN) -->
 <div class="charts">
 <div class="card"><b>SEO Growth</b><canvas id="c1"></canvas></div>
 <div class="card"><b>Issue Breakdown</b><canvas id="c2"></canvas></div>
@@ -131,96 +138,87 @@ Scanning website… analyzing pages, keywords, toolkits, and ranking projections
 <div class="card"><b>Traffic Projection</b><canvas id="c4"></canvas></div>
 </div>
 
-<div class="card" style="margin-top:20px">
-<b>Selected Toolkits</b><br><br>
-✔ Local SEO Toolkit — Improve map rankings<br>
-✔ Content Optimization Toolkit — Target keywords<br>
-✔ Authority Toolkit — Improve trust + backlinks
-</div>
-
-<div class="card" style="margin-top:15px">
-<b>Critical Issues</b><br><br>
-• Missing local keywords<br>
-• Weak Google Business signals<br>
-• No schema markup<br>
-• Images missing alt text<br>
-• Weak internal linking
-</div>
-
-</div>
-
 <script>
 
 let charts=[];
 
-function scan(){
-
-document.getElementById("results").classList.add("hidden");
-document.getElementById("loader").classList.remove("hidden");
-
-setTimeout(()=>{
-
-document.getElementById("loader").classList.add("hidden");
-document.getElementById("results").classList.remove("hidden");
-
-charts.forEach(c=>c.destroy());
+// INITIAL EMPTY CHARTS (IMPORTANT)
+function initCharts(){
 
 charts.push(new Chart(c1,{
 type:"line",
-data:{
-labels:["Current","Scan1","Scan2","Scan3"],
-datasets:[{
-label:"SEO Score",
-data:[82,87,89,91],
-borderColor:"#16a34a",
-backgroundColor:"rgba(22,163,74,0.2)",
-fill:true,
-tension:.4
-}]
-}
+data:{labels:["Current","Scan1","Scan2","Scan3"],
+datasets:[{label:"SEO Score",data:[0,0,0,0],borderColor:"#16a34a",fill:true}]}
 }));
 
 charts.push(new Chart(c2,{
 type:"bar",
-data:{
-labels:["Technical","Content","Local","Authority"],
-datasets:[{
-label:"Issues",
-data:[30,25,20,15],
-backgroundColor:["#2563eb","#16a34a","#f97316","#9333ea"]
-}]
-}
+data:{labels:["Technical","Content","Local","Authority"],
+datasets:[{label:"Issues",data:[0,0,0,0]}]}
 }));
 
 charts.push(new Chart(c3,{
 type:"line",
-data:{
-labels:["Week1","Week2","Week3","Week4"],
-datasets:[{
-label:"Ranking Position",
-data:[50,40,28,18],
-borderColor:"#2563eb",
-backgroundColor:"rgba(37,99,235,.2)",
-fill:true
-}]
-}
+data:{labels:["Week1","Week2","Week3","Week4"],
+datasets:[{label:"Ranking Position",data:[0,0,0,0],borderColor:"#2563eb"}]}
 }));
 
 charts.push(new Chart(c4,{
 type:"bar",
-data:{
-labels:["Current","Projected"],
-datasets:[{
-label:"Traffic",
-data:[2200,4200],
-backgroundColor:["#94a3b8","#2563eb"]
-}]
+data:{labels:["Current","Projected"],
+datasets:[{label:"Traffic",data:[0,0]}]}
+}));
+
 }
+
+function runScan(){
+
+document.getElementById("loader").style.display="block";
+
+setTimeout(()=>{
+
+document.getElementById("loader").style.display="none";
+
+// METRICS
+score.innerText=82;
+projected.innerText=91;
+improvement.innerText="+9%";
+issues.innerText=8;
+
+// UPDATE CHARTS
+charts.forEach(c=>c.destroy());
+charts=[];
+
+charts.push(new Chart(c1,{
+type:"line",
+data:{labels:["Current","Scan1","Scan2","Scan3"],
+datasets:[{label:"SEO Score",data:[82,87,89,91],borderColor:"#16a34a",backgroundColor:"rgba(22,163,74,.2)",fill:true}]}
+}));
+
+charts.push(new Chart(c2,{
+type:"bar",
+data:{labels:["Technical","Content","Local","Authority"],
+datasets:[{label:"Issues",data:[30,25,20,15],backgroundColor:["#2563eb","#16a34a","#f97316","#9333ea"]}]}
+}));
+
+charts.push(new Chart(c3,{
+type:"line",
+data:{labels:["Week1","Week2","Week3","Week4"],
+datasets:[{label:"Ranking Position",data:[50,40,28,18],borderColor:"#2563eb",backgroundColor:"rgba(37,99,235,.2)",fill:true}]}
+}));
+
+charts.push(new Chart(c4,{
+type:"bar",
+data:{labels:["Current","Projected"],
+datasets:[{label:"Traffic",data:[2200,4200],backgroundColor:["#94a3b8","#2563eb"]}]}
 }));
 
 },900);
 
 }
+
+// INIT ON LOAD
+initCharts();
 
 </script>
 

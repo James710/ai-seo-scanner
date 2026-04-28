@@ -1,77 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>AI SEO Brain — Enterprise Dashboard</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>AI SEO Brain — Enterprise Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  margin: 0;
-  padding: 20px;
-  color: #1e293b;
-}
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 20px;
+      color: #1e293b;
+    }
 
-.header {
-  background: #1e3a5f;
-  color: white;
-  padding: 25px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
+    .header {
+      background: #1e3a5f;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
 
-.header input {
-  padding: 10px;
-  width: 350px;
-  border-radius: 6px;
-  border: none;
-  margin-right: 10px;
-}
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+    }
 
-.header button {
-  padding: 10px 18px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
+    .banner {
+      margin-top: 20px;
+      padding: 16px;
+      background: #e0f2fe;
+      border-left: 6px solid #2563eb;
+      border-radius: 8px;
+    }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
 
-.metric {
-  font-size: 28px;
-  font-weight: bold;
-}
+    .metric {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-.green { color: #16a34a; }
-.blue { color: #2563eb; }
-.orange { color: #f97316; }
+    .orange { color: #f97316; }
+    .green { color: #16a34a; }
+    .blue { color: #2563eb; }
 
-.small {
-  font-size: 13px;
-  color: #64748b;
-}
-</style>
+    .section {
+      margin-top: 20px;
+    }
+
+    canvas {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -79,183 +85,153 @@ body {
 <div class="header">
   <h1>AI SEO Brain — Enterprise Dashboard</h1>
 
-  <input value="https://www.eazydrivemarketing.com/">
-  <button>Run AI Scan</button>
-
-<div style="margin-top:14px; padding:12px 14px; background:#e0f2fe; color:#0f172a; border-left:5px solid #2563eb; border-radius:8px; font-size:14px; line-height:1.5;">
-  <strong>Enterprise Demo Mode:</strong> This dashboard represents the full AI SEO Brain system in portfolio/demo form. 
-  The real platform is designed to scan up to 25 pages per website, score technical SEO issues, recommend the top 3 improvement toolkits, generate keyword and page-level optimization instructions, forecast before/after SEO performance, and produce an 8-page enterprise AI SEO report for clients.
+  <div style="display:flex; gap:10px; margin-top:10px;">
+    <input value="https://www.eazydrivemarketing.com/">
+    <button onclick="runScan()">Run AI Scan</button>
+  </div>
 </div>
+
+<div class="banner">
+  <strong>Enterprise Demo Mode</strong><br><br>
+  This dashboard simulates the full AI SEO Brain platform:
+  <br>• 25-page crawl scanning
+  <br>• Technical SEO audit
+  <br>• AI keyword modeling
+  <br>• Page-level optimization engine
+  <br>• Toolkit recommendation system
+  <br>• Before vs After projections
+  <br>• Traffic + ranking forecasting
+  <br>• Full enterprise report generation (8 pages)
 </div>
 
 <div class="grid">
-
   <div class="card">
-    <h2>SEO Score</h2>
+    SEO Score
     <div class="metric orange">85</div>
   </div>
 
   <div class="card">
-    <h2>Projected Score</h2>
+    Projected Score
     <div class="metric green">100</div>
   </div>
 
   <div class="card">
-    <h2>Improvement</h2>
+    Improvement
     <div class="metric blue">+15%</div>
   </div>
 
   <div class="card">
-    <h2>Issues Found</h2>
+    Issues Found
     <div class="metric">7</div>
   </div>
-
 </div>
 
-<br>
-
-<div class="grid-2">
-
-  <div class="card">
-    <h2>SEO Growth Projection</h2>
-    <canvas id="growthChart"></canvas>
-  </div>
-
-  <div class="card">
-    <h2>Issue Breakdown</h2>
-    <canvas id="issueChart"></canvas>
-  </div>
-
+<div class="section">
+  <h3>SEO Growth Projection</h3>
+  <canvas id="growthChart"></canvas>
 </div>
 
-<br>
-
-<div class="grid-2">
-
-  <div class="card">
-    <h2>Keyword Ranking Improvement</h2>
-    <canvas id="keywordChart"></canvas>
-  </div>
-
-  <div class="card">
-    <h2>Traffic Growth Forecast</h2>
-    <canvas id="trafficChart"></canvas>
-  </div>
-
+<div class="section">
+  <h3>Issue Breakdown</h3>
+  <canvas id="issueChart"></canvas>
 </div>
 
-<br>
+<div class="section">
+  <h3>Keyword Ranking Growth</h3>
+  <canvas id="keywordChart"></canvas>
+</div>
 
-<div class="card">
-  <h2>Selected Toolkits Driving Growth</h2>
+<div class="section">
+  <h3>Traffic Projection</h3>
+  <canvas id="trafficChart"></canvas>
+</div>
+
+<div class="section card">
+  <h3>Selected Toolkits</h3>
   <ul>
-    <li>Technical SEO Toolkit → fixes indexing + boosts crawl efficiency</li>
-    <li>Content Optimization Toolkit → improves keyword ranking velocity</li>
-    <li>Local SEO Toolkit → increases visibility + conversion traffic</li>
+    <li>Technical SEO Toolkit → +8 score improvement</li>
+    <li>Content Optimization Toolkit → +5 ranking boost</li>
+    <li>Local SEO Toolkit → +32% visibility increase</li>
   </ul>
 </div>
 
-<br>
-
-<div class="card">
-  <h2>Critical Issues</h2>
+<div class="section card">
+  <h3>Critical Issues</h3>
   <ul>
     <li>Missing meta descriptions (12 pages)</li>
     <li>No H1 tags on key pages</li>
     <li>18 images missing alt text</li>
     <li>Slow load speed (3.8s)</li>
     <li>Duplicate titles detected</li>
-    <li>Weak keyword targeting</li>
-    <li>Poor internal linking structure</li>
+    <li>Poor keyword usage</li>
+    <li>Weak internal linking</li>
   </ul>
 </div>
 
-<br>
+<div class="section card">
+  <h3>Page-Level AI Optimization</h3>
 
-<div class="card">
-  <h2>Page-Level AI Optimization</h2>
+  <b>Homepage</b><br>
+  Keyword: Digital Marketing San Diego<br>
+  Fix: Add H1, expand content, improve keyword placement<br><br>
 
-  <p><strong>Homepage</strong></p>
-  <p>Keyword: Digital Marketing San Diego</p>
-  <p>Fix: Add H1, expand content, improve keyword density</p>
-
-  <p><strong>Services Page</strong></p>
-  <p>Keyword: SEO Services San Diego</p>
-  <p>Fix: Add FAQs, improve headings, increase content depth</p>
-
-</div>
-
-<br>
-
-<div class="card">
-  <h2>Enterprise Report Preview</h2>
-  <p class="small">
-    Executive Summary → Technical Audit → Keyword Strategy → Page Optimization → Toolkit Plan → Forecast
-  </p>
+  <b>Services Page</b><br>
+  Keyword: SEO Services San Diego<br>
+  Fix: Add FAQs, improve headings, increase content depth
 </div>
 
 <script>
+function runScan() {
 
-// SEO Growth (toolkits applied)
-new Chart(document.getElementById("growthChart"), {
-  type: "line",
+new Chart(document.getElementById('growthChart'), {
+  type: 'line',
   data: {
-    labels: ["Week 1","Week 2","Week 3","Week 4","Week 5"],
-    datasets: [
-      {
-        label: "Current SEO Score",
-        data: [85,86,87,88,89],
-        borderColor: "#f97316",
-        borderDash: [5,5]
-      },
-      {
-        label: "Projected (With Toolkits)",
-        data: [85,88,92,96,100],
-        borderColor: "#16a34a"
-      }
-    ]
-  }
-});
-
-// Issue Breakdown (clean labels)
-new Chart(document.getElementById("issueChart"), {
-  type: "bar",
-  data: {
-    labels: ["Technical","Content","Local","Authority"],
+    labels: ['Before', 'After'],
     datasets: [{
-      label: "Issue Count",
-      data: [30,25,20,15],
-      backgroundColor: ["#2563eb","#16a34a","#f97316","#9333ea"]
+      label: 'SEO Score',
+      data: [85, 100],
+      borderColor: 'green'
     }]
   }
 });
 
-// Keyword ranking (realistic downward improvement)
-new Chart(document.getElementById("keywordChart"), {
-  type: "line",
+new Chart(document.getElementById('issueChart'), {
+  type: 'bar',
   data: {
-    labels: ["Week 1","Week 2","Week 3","Week 4","Week 5"],
+    labels: ['Technical', 'Content', 'Local', 'Authority'],
     datasets: [{
-      label: "Avg Keyword Position",
-      data: [52,45,34,22,12],
-      borderColor: "#16a34a"
+      label: 'Issues',
+      data: [30, 25, 20, 15],
+      backgroundColor: ['#2563eb','#16a34a','#f97316','#9333ea']
     }]
   }
 });
 
-// Traffic growth (accelerating curve)
-new Chart(document.getElementById("trafficChart"), {
-  type: "bar",
+new Chart(document.getElementById('keywordChart'), {
+  type: 'line',
   data: {
-    labels: ["Month 1","Month 2","Month 3","Month 4"],
+    labels: ['Week 1','Week 2','Week 3','Week 4'],
     datasets: [{
-      label: "Projected Organic Traffic",
-      data: [1200,2800,5200,8200],
-      backgroundColor: "#2563eb"
+      label: 'Keyword Rank',
+      data: [52, 40, 28, 12],
+      borderColor: 'green'
     }]
   }
 });
 
+new Chart(document.getElementById('trafficChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Current','Projected'],
+    datasets: [{
+      label: 'Traffic',
+      data: [3200, 6800],
+      backgroundColor: ['#64748b','#2563eb']
+    }]
+  }
+});
+
+}
 </script>
 
 </body>

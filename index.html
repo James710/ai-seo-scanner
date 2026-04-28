@@ -1,442 +1,287 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI SEO Brain — Enterprise Scanner</title>
+  <title>AI SEO Brain — Enterprise</title>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #07111f;
-      color: #e5e7eb;
+      font-family: "Segoe UI", Arial;
+      background: #f4f7fb;
+      color: #1e293b;
     }
 
-    .app {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      background: #0b1220;
-      border-right: 1px solid #1e293b;
-      padding: 24px;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-      color: #38bdf8;
-      margin-bottom: 30px;
-    }
-
-    .nav-item {
-      padding: 12px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      color: #cbd5e1;
-      background: #111827;
-    }
-
-    .main {
-      padding: 28px;
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
     }
 
     .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 30px;
+      background: #0f2a44;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
     }
 
     .scan-box {
-      display: flex;
-      gap: 10px;
+      margin-top: 10px;
     }
 
     input {
-      width: 380px;
-      padding: 12px;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      background: #0f172a;
-      color: white;
+      padding: 10px;
+      width: 320px;
+      border-radius: 6px;
+      border: none;
     }
 
     button {
-      padding: 12px 20px;
+      padding: 10px 16px;
+      border-radius: 6px;
       border: none;
-      border-radius: 8px;
-      background: #22c55e;
+      background: #2563eb;
       color: white;
       font-weight: bold;
-      cursor: pointer;
     }
 
-    .grid-4 {
+    .grid-4, .grid-2 {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 18px;
-    }
+    .grid-4 { grid-template-columns: repeat(4,1fr); }
+    .grid-2 { grid-template-columns: repeat(2,1fr); }
 
     .card {
-      background: #111827;
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
 
     .metric-title {
-      color: #94a3b8;
-      font-size: 14px;
-      margin-bottom: 8px;
+      font-size: 13px;
+      color: #64748b;
     }
 
     .metric {
-      font-size: 42px;
+      font-size: 28px;
       font-weight: bold;
-      color: #22c55e;
+      margin-top: 6px;
     }
 
-    .bad { color: #f97316; }
-    .blue { color: #38bdf8; }
-    .purple { color: #a78bfa; }
+    .green { color: #16a34a; }
+    .blue { color: #2563eb; }
+    .orange { color: #f97316; }
 
     h2 {
       margin-top: 0;
-      color: #f8fafc;
-      font-size: 22px;
+      font-size: 18px;
     }
 
-    h3 {
-      margin-bottom: 8px;
-      color: #38bdf8;
-    }
+    ul { padding-left: 20px; }
 
     .toolkit {
-      border-left: 4px solid #38bdf8;
-      padding: 14px;
-      background: #020617;
-      border-radius: 10px;
-      margin-bottom: 12px;
+      border-left: 4px solid #2563eb;
+      padding: 12px;
+      background: #f1f5f9;
+      margin-bottom: 10px;
+      border-radius: 6px;
     }
 
     .page {
-      background: #020617;
-      border: 1px solid #334155;
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 14px;
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
 
     .tag {
       display: inline-block;
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 5px 8px;
-      border-radius: 999px;
-      margin: 4px 4px 4px 0;
-      color: #cbd5e1;
-      font-size: 13px;
+      background: #e2e8f0;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin: 4px;
+      font-size: 12px;
     }
-
-    .report-page {
-      padding: 14px;
-      border-bottom: 1px solid #334155;
-    }
-
-    .report-page:last-child {
-      border-bottom: none;
-    }
-
-    ul { padding-left: 20px; }
-    li { margin-bottom: 6px; }
 
     canvas {
-      max-height: 260px;
+      max-height: 250px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-  <aside class="sidebar">
-    <div class="logo">AI SEO Brain</div>
-    <div class="nav-item">Dashboard</div>
-    <div class="nav-item">Website Scan</div>
-    <div class="nav-item">Toolkit Engine</div>
-    <div class="nav-item">Page Optimization</div>
-    <div class="nav-item">Enterprise Report</div>
-    <div class="nav-item">Forecasting</div>
-  </aside>
+  <div class="header">
+    <h1>AI SEO Brain — Enterprise Dashboard</h1>
 
-  <main class="main">
-
-    <div class="header">
-      <div>
-        <h1>Enterprise SEO Scanner</h1>
-        <p>AI-driven website audit, toolkit recommendation, and page-level optimization report.</p>
-      </div>
-
-      <div class="scan-box">
-        <input id="url" value="https://www.eazydrivemarketing.com/" />
-        <button onclick="scan()">Run Full AI Scan</button>
-      </div>
+    <div class="scan-box">
+      <input id="url" value="https://www.eazydrivemarketing.com/" />
+      <button onclick="scan()">Run AI Scan</button>
     </div>
+  </div>
 
-    <div class="grid-4">
-      <div class="card">
-        <div class="metric-title">Current SEO Score</div>
-        <div id="currentScore" class="metric bad">--</div>
-      </div>
-
-      <div class="card">
-        <div class="metric-title">Projected Score After Toolkits</div>
-        <div id="projectedScore" class="metric">--</div>
-      </div>
-
-      <div class="card">
-        <div class="metric-title">Projected Improvement</div>
-        <div id="improvement" class="metric blue">--%</div>
-      </div>
-
-      <div class="card">
-        <div class="metric-title">Pages Reviewed</div>
-        <div class="metric purple">5</div>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h2>Before vs After Forecast</h2>
-        <canvas id="scoreChart"></canvas>
-      </div>
-
-      <div class="card">
-        <h2>Issue Distribution</h2>
-        <canvas id="issueChart"></canvas>
-      </div>
+  <!-- KPI ROW -->
+  <div class="grid-4">
+    <div class="card">
+      <div class="metric-title">SEO Score</div>
+      <div id="currentScore" class="metric orange">--</div>
     </div>
 
     <div class="card">
-      <h2>AI Selected Toolkits</h2>
-
-      <div class="toolkit">
-        <h3>1. Technical SEO Toolkit</h3>
-        <p><strong>Purpose:</strong> Fix crawlability, metadata, headings, image SEO, schema, speed, and indexing issues.</p>
-        <p><strong>Projected Impact:</strong> +8 to +12 SEO score points.</p>
-      </div>
-
-      <div class="toolkit">
-        <h3>2. Content Optimization Toolkit</h3>
-        <p><strong>Purpose:</strong> Improve page titles, descriptions, headings, keyword targeting, service content, and topical depth.</p>
-        <p><strong>Projected Impact:</strong> +7 to +10 SEO score points.</p>
-      </div>
-
-      <div class="toolkit">
-        <h3>3. Local SEO + Authority Toolkit</h3>
-        <p><strong>Purpose:</strong> Improve local keyword relevance, city/service targeting, Google Business Profile alignment, reviews, citations, and backlinks.</p>
-        <p><strong>Projected Impact:</strong> +5 to +9 SEO score points.</p>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h2>Critical Issues Detected</h2>
-        <ul id="issues"></ul>
-      </div>
-
-      <div class="card">
-        <h2>AI Executive Insight</h2>
-        <p id="executiveInsight">
-          Run scan to generate AI analysis.
-        </p>
-      </div>
+      <div class="metric-title">Projected Score</div>
+      <div id="projectedScore" class="metric green">--</div>
     </div>
 
     <div class="card">
-      <h2>Page-by-Page AI SEO Output</h2>
-
-      <div class="page">
-        <h3>Homepage</h3>
-        <p><strong>Primary Keyword:</strong> San Diego digital marketing agency</p>
-        <p><strong>Long-Tail Keywords:</strong></p>
-        <span class="tag">digital marketing agency in San Diego</span>
-        <span class="tag">SEO services for local businesses</span>
-        <span class="tag">AI marketing automation San Diego</span>
-        <p><strong>Recommended Meta Title:</strong> San Diego Digital Marketing Agency | SEO & AI Marketing Services</p>
-        <p><strong>Recommended Meta Description:</strong> Grow your business with SEO, automation, and AI-powered digital marketing services built for local San Diego companies.</p>
-        <ul>
-          <li>Add keyword-rich H1 focused on San Diego digital marketing.</li>
-          <li>Expand homepage copy to explain services, industries, and outcomes.</li>
-          <li>Add internal links to SEO, automation, and lead generation service pages.</li>
-          <li>Add trust signals, testimonials, and CTA buttons above the fold.</li>
-        </ul>
-      </div>
-
-      <div class="page">
-        <h3>Services Page</h3>
-        <p><strong>Primary Keyword:</strong> SEO services San Diego</p>
-        <p><strong>Long-Tail Keywords:</strong></p>
-        <span class="tag">local SEO services San Diego</span>
-        <span class="tag">website SEO audit service</span>
-        <span class="tag">SEO optimization for small business</span>
-        <p><strong>Recommended Meta Title:</strong> SEO Services in San Diego | Website Optimization & Local SEO</p>
-        <p><strong>Recommended Meta Description:</strong> Improve rankings, traffic, and leads with professional SEO services including audits, keyword optimization, and local SEO strategy.</p>
-        <ul>
-          <li>Create separate sections for technical SEO, local SEO, content SEO, and reporting.</li>
-          <li>Add FAQ schema targeting common buyer questions.</li>
-          <li>Add service-specific CTAs after each section.</li>
-          <li>Improve keyword placement in H2/H3 headings.</li>
-        </ul>
-      </div>
-
-      <div class="page">
-        <h3>Lead Generation Page</h3>
-        <p><strong>Primary Keyword:</strong> lead generation automation</p>
-        <p><strong>Long-Tail Keywords:</strong></p>
-        <span class="tag">automated lead generation system</span>
-        <span class="tag">AI lead generation for businesses</span>
-        <span class="tag">sales automation software</span>
-        <p><strong>Recommended Meta Title:</strong> AI Lead Generation Automation | Find and Convert More Leads</p>
-        <p><strong>Recommended Meta Description:</strong> Automate lead discovery, enrichment, outreach, and tracking with AI-powered lead generation workflows.</p>
-        <ul>
-          <li>Explain the workflow from data extraction to email outreach.</li>
-          <li>Add screenshots or workflow diagrams.</li>
-          <li>Add proof of CRM, queue, and email automation capabilities.</li>
-        </ul>
-      </div>
-
-      <div class="page">
-        <h3>Contact Page</h3>
-        <p><strong>Primary Keyword:</strong> contact digital marketing agency</p>
-        <p><strong>Long-Tail Keywords:</strong></p>
-        <span class="tag">schedule SEO consultation</span>
-        <span class="tag">request website audit</span>
-        <span class="tag">San Diego marketing consultation</span>
-        <p><strong>Recommended Meta Title:</strong> Contact Eazy Drive Marketing | Request an SEO Consultation</p>
-        <p><strong>Recommended Meta Description:</strong> Contact our team to request an SEO audit, website scan, or digital marketing consultation.</p>
-        <ul>
-          <li>Add location schema and business contact schema.</li>
-          <li>Add stronger CTA copy above the contact form.</li>
-          <li>Add expected response time and service area details.</li>
-        </ul>
-      </div>
+      <div class="metric-title">Improvement</div>
+      <div id="improvement" class="metric blue">--%</div>
     </div>
 
     <div class="card">
-      <h2>8-Page Enterprise AI SEO Report Preview</h2>
+      <div class="metric-title">Issues Found</div>
+      <div id="issueCount" class="metric">--</div>
+    </div>
+  </div>
 
-      <div class="report-page"><strong>Page 1 — Executive Summary:</strong> Overall SEO condition, current score, projected score, and business impact.</div>
-      <div class="report-page"><strong>Page 2 — Technical SEO Audit:</strong> Metadata, headings, crawlability, schema, indexing, speed, image SEO, and page structure.</div>
-      <div class="report-page"><strong>Page 3 — Keyword Strategy:</strong> Primary keywords, long-tail keywords, local intent keywords, and service page keyword mapping.</div>
-      <div class="report-page"><strong>Page 4 — Page-Level Optimization:</strong> Homepage, services page, lead generation page, and contact page recommendations.</div>
-      <div class="report-page"><strong>Page 5 — Toolkit Recommendations:</strong> Top 3 selected toolkits with projected impact and implementation priority.</div>
-      <div class="report-page"><strong>Page 6 — Competitor & Local SEO Plan:</strong> Local rankings, citation opportunities, GBP alignment, and authority signals.</div>
-      <div class="report-page"><strong>Page 7 — Implementation Roadmap:</strong> Daily, weekly, and monthly optimization tasks.</div>
-      <div class="report-page"><strong>Page 8 — Forecast:</strong> Before/after score projection, ranking improvement forecast, and conversion opportunity summary.</div>
+  <!-- CHARTS -->
+  <div class="grid-2">
+    <div class="card">
+      <h2>SEO Growth Projection</h2>
+      <canvas id="scoreChart"></canvas>
     </div>
 
-  </main>
+    <div class="card">
+      <h2>Issue Breakdown</h2>
+      <canvas id="issueChart"></canvas>
+    </div>
+  </div>
+
+  <!-- TOOLKITS -->
+  <div class="card">
+    <h2>Selected Toolkits</h2>
+
+    <div class="toolkit">
+      Technical SEO Toolkit — Fix metadata, structure, indexing
+    </div>
+
+    <div class="toolkit">
+      Content Optimization Toolkit — Improve keyword targeting + content depth
+    </div>
+
+    <div class="toolkit">
+      Local SEO Toolkit — Improve local rankings + authority
+    </div>
+  </div>
+
+  <!-- ISSUES -->
+  <div class="card">
+    <h2>Critical Issues</h2>
+    <ul id="issues"></ul>
+  </div>
+
+  <!-- PAGE LEVEL OUTPUT -->
+  <div class="card">
+    <h2>Page-Level AI Optimization</h2>
+
+    <div class="page">
+      <strong>Homepage</strong><br>
+      Keyword: Digital Marketing San Diego<br>
+
+      <div class="tag">SEO services</div>
+      <div class="tag">digital marketing</div>
+
+      <p><strong>Fix:</strong> Add H1, expand content, improve keyword placement</p>
+    </div>
+
+    <div class="page">
+      <strong>Services Page</strong><br>
+      Keyword: SEO Services San Diego<br>
+
+      <div class="tag">local SEO</div>
+      <div class="tag">ranking improvement</div>
+
+      <p><strong>Fix:</strong> Add FAQs, improve headings, increase content depth</p>
+    </div>
+
+  </div>
+
+  <!-- REPORT -->
+  <div class="card">
+    <h2>Enterprise Report Preview</h2>
+    <p>
+      Executive Summary → Technical Audit → Keyword Strategy → Page Optimization → Toolkit Plan → Forecast
+    </p>
+  </div>
+
 </div>
 
 <script>
-let scoreChart;
-let issueChart;
+
+let scoreChart, issueChart;
 
 async function scan() {
-  const url = document.getElementById("url").value;
 
   const res = await fetch("http://localhost:5000/scan", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url })
+    body: JSON.stringify({ url: document.getElementById("url").value })
   });
 
   const data = await res.json();
 
   const current = data.score || 72;
-  const projected = Math.min(current + 22, 100);
-  const improvement = projected - current;
+  const projected = Math.min(current + 20, 100);
 
   document.getElementById("currentScore").innerText = current;
   document.getElementById("projectedScore").innerText = projected;
-  document.getElementById("improvement").innerText = "+" + improvement + "%";
+  document.getElementById("improvement").innerText = "+" + (projected-current) + "%";
 
-  const issueList = data.issues && data.issues.length ? data.issues : [
-    "Missing optimized meta descriptions",
-    "Weak heading hierarchy",
+  const issues = data.issues.length ? data.issues : [
+    "Missing meta descriptions",
+    "Weak heading structure",
     "Images missing alt text",
-    "Insufficient page-level keyword targeting",
-    "Limited local SEO signals"
+    "Low keyword targeting"
   ];
 
-  document.getElementById("issues").innerHTML =
-    issueList.map(i => `<li>${i}</li>`).join("");
+  document.getElementById("issueCount").innerText = issues.length;
 
-  document.getElementById("executiveInsight").innerHTML = `
-    AI SEO Brain identified technical, content, and local authority gaps that are limiting search visibility.
-    The recommended improvement path is to apply the Technical SEO Toolkit, Content Optimization Toolkit,
-    and Local SEO + Authority Toolkit. Based on the scan, the site can reasonably improve from
-    <strong>${current}</strong> to <strong>${projected}</strong> after implementation.
-  `;
+  document.getElementById("issues").innerHTML =
+    issues.map(i => `<li>${i}</li>`).join("");
 
   if (scoreChart) scoreChart.destroy();
   if (issueChart) issueChart.destroy();
 
   scoreChart = new Chart(document.getElementById("scoreChart"), {
-    type: "bar",
+    type: "line",
     data: {
-      labels: ["Current Score", "Projected Score"],
+      labels: ["Before","After"],
       datasets: [{
-        label: "SEO Score",
-        data: [current, projected]
+        data: [current, projected],
+        borderColor: "#2563eb",
+        fill: true
       }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, max: 100 } }
     }
   });
 
   issueChart = new Chart(document.getElementById("issueChart"), {
-    type: "doughnut",
+    type: "bar",
     data: {
-      labels: ["Technical SEO", "Content SEO", "Local SEO", "Authority", "UX"],
+      labels: ["Technical","Content","Local","Authority"],
       datasets: [{
-        data: [30, 25, 20, 15, 10]
+        data: [30,25,20,15],
+        backgroundColor: ["#2563eb","#16a34a","#f97316","#a855f7"]
       }]
-    },
-    options: {
-      responsive: true
     }
   });
+
 }
 </script>
 

@@ -4,270 +4,594 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI SEO Brain — Enterprise Dashboard</title>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
-body {
+body{
   margin:0;
-  font-family: Arial;
-  background:#f4f7fb;
+  font-family:Arial, sans-serif;
+  background:#f4f6f9;
+  color:#111827;
 }
 
-.container {
-  max-width:1200px;
+.container{
+  max-width:1400px;
   margin:auto;
   padding:20px;
 }
 
-.header {
-  background:#243f63;
+.header{
+  background:#1e3a5f;
   color:white;
-  padding:20px;
-  border-radius:10px;
+  padding:26px;
+  border-radius:12px;
+  margin-bottom:16px;
 }
 
-input {
-  width:70%;
-  padding:10px;
+.header h1{
+  margin:0 0 18px 0;
+  font-size:32px;
+}
+
+.scan-row{
+  display:flex;
+  gap:14px;
+}
+
+.header input{
+  flex:1;
+  padding:13px;
   border-radius:6px;
   border:none;
+  font-size:15px;
 }
 
-button {
-  padding:10px 16px;
+.header button{
+  padding:13px 22px;
+  background:#2563eb;
+  color:white;
   border:none;
   border-radius:6px;
-  background:#2d6cdf;
-  color:white;
+  cursor:pointer;
+  font-weight:bold;
 }
 
-.grid {
+.helper{
+  margin-top:9px;
+  font-size:13px;
+  opacity:.85;
+}
+
+.notice{
+  background:#e0ecf7;
+  padding:14px 16px;
+  margin-bottom:18px;
+  border-left:5px solid #2563eb;
+  border-radius:8px;
+  font-size:14px;
+  line-height:1.35;
+}
+
+.grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:15px;
-  margin-top:15px;
+  margin-bottom:18px;
 }
 
-.card {
+.card{
   background:white;
-  padding:15px;
+  padding:18px;
   border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.metric {
-  font-size:24px;
+.metric-title{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+.metric{
+  font-size:28px;
   font-weight:bold;
 }
 
-.orange { color:#e67e22; }
-.green { color:#27ae60; }
-.blue { color:#2d6cdf; }
+.orange{color:#f97316;}
+.green{color:#16a34a;}
+.blue{color:#2563eb;}
 
-.section { margin-top:20px; }
-
-.two-col {
+.charts{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
+  gap:18px;
+  margin-bottom:24px;
 }
 
-canvas {
-  height:180px !important;
+.chart-card{
+  background:white;
+  padding:14px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-/* LOADER */
-.loader {
-  display:none;
-  text-align:center;
-  margin-top:20px;
+.chart-card h3{
+  margin:0 0 6px 0;
+  font-size:17px;
 }
 
-.loader img {
-  width:180px;
+.chart-box{
+  height:235px;
 }
 
-/* DEMO BUTTONS */
-.demo-btn {
-  background:#bdc3c7;
-  color:#555;
-  cursor:not-allowed;
+canvas{
+  width:100% !important;
+  height:100% !important;
 }
 
-.pricing {
+.section-title{
+  font-size:24px;
+  font-weight:bold;
+  margin:24px 0 14px;
+}
+
+.toolkit-grid,
+.page-grid,
+.pricing{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  margin-top:20px;
+  gap:16px;
 }
 
-.price-card {
+.toolkit-card h3,
+.page-card h3,
+.price-card h3{
+  margin-top:0;
+}
+
+.toolkit-card,
+.page-card,
+.price-card{
   background:white;
   padding:20px;
   border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.toolkit-card{
+  border-top:4px solid #2563eb;
+}
+
+.page-card{
+  border-top:4px solid #16a34a;
+}
+
+.price-card{
   text-align:center;
+  border-top:4px solid #f97316;
 }
 
-.price {
-  font-size:28px;
+.price{
+  font-size:30px;
   font-weight:bold;
-  margin:10px 0;
+  margin:14px 0;
 }
 
+.demo-btn{
+  background:#cbd5e1;
+  color:#475569;
+  border:none;
+  padding:10px 18px;
+  border-radius:6px;
+  cursor:not-allowed;
+  font-weight:bold;
+}
+
+.small-note{
+  font-size:13px;
+  color:#475569;
+  margin-top:12px;
+}
+
+.scan-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:9999;
+  color:white;
+}
+
+.scan-overlay img{
+  width:360px;
+  max-width:80vw;
+  border-radius:10px;
+  margin-bottom:18px;
+}
+
+.scan-text{
+  font-size:18px;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .grid,
+  .charts,
+  .toolkit-grid,
+  .page-grid,
+  .pricing{
+    grid-template-columns:1fr;
+  }
+
+  .scan-row{
+    flex-direction:column;
+  }
+}
 </style>
 </head>
 
 <body>
 
+<div id="scanOverlay" class="scan-overlay">
+  <img src="./AI+SEO+Innovation.gif" alt="AI SEO Brain scanning">
+  <div id="scanText" class="scan-text">Initializing AI SEO Brain...</div>
+</div>
+
 <div class="container">
 
-<!-- HEADER -->
-<div class="header">
-<h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
+  <div class="header">
+    <h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
 
-<input value="https://www.coopsbbq.com/">
-<button onclick="runScan()">🚀 Run AI Scan</button>
+    <div class="scan-row">
+      <input id="urlInput" value="https://www.coopsbbq.com/">
+      <button onclick="runScan()">🚀 Run AI Scan</button>
+    </div>
 
-<div style="margin-top:8px;font-size:13px;">
-Enter any website URL to simulate a full AI SEO scan
-</div>
-</div>
+    <div class="helper">
+      Enter any website URL to simulate a full AI SEO scan and enterprise report output.
+    </div>
+  </div>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-<img src="./scan.gif" alt="Scanning...">
-<p>Scanning website with AI SEO Brain...</p>
-</div>
+  <div class="notice">
+    <strong>Enterprise Demo Mode</strong><br>
+    25-page crawl • Technical + Content + Local SEO • 40+ toolkit AI engine • Page-level fixes • Traffic + ranking projections • Full enterprise report.
+    This demo shows the first 3 page examples. The full product scans up to 25 pages and generates complete issue/fix instructions.
+  </div>
 
-<!-- METRICS -->
-<div class="grid">
-<div class="card"><h3>SEO Score</h3><div id="score" class="metric orange">--</div></div>
-<div class="card"><h3>Projected</h3><div id="projected" class="metric green">--</div></div>
-<div class="card"><h3>Improvement</h3><div id="improve" class="metric blue">--</div></div>
-<div class="card"><h3>Issues</h3><div id="issues" class="metric">--</div></div>
-</div>
+  <div class="grid">
+    <div class="card">
+      <div class="metric-title">SEO Score</div>
+      <div id="score" class="metric orange">--</div>
+    </div>
 
-<!-- CHARTS -->
-<div class="section two-col">
-<div class="card"><canvas id="growth"></canvas></div>
-<div class="card"><canvas id="issuesChart"></canvas></div>
-</div>
+    <div class="card">
+      <div class="metric-title">Projected</div>
+      <div id="projected" class="metric green">--</div>
+    </div>
 
-<div class="section two-col">
-<div class="card"><canvas id="keywords"></canvas></div>
-<div class="card"><canvas id="traffic"></canvas></div>
-</div>
+    <div class="card">
+      <div class="metric-title">Improvement</div>
+      <div id="improvement" class="metric blue">--</div>
+    </div>
 
-<!-- TOOLKITS -->
-<div class="section" id="toolkits" style="display:none;">
-<h2>🧠 AI-Selected Toolkits</h2>
-<ul>
-<li><b>Technical SEO Toolkit</b> → Fix speed, indexing, metadata</li>
-<li><b>Content Optimization Toolkit</b> → Improve keywords & rankings</li>
-<li><b>Local SEO Toolkit</b> → Boost local visibility</li>
-</ul>
-</div>
+    <div class="card">
+      <div class="metric-title">Issues</div>
+      <div id="issues" class="metric">--</div>
+    </div>
+  </div>
 
-<!-- PAGE FIX -->
-<div class="section" id="pages" style="display:none;">
-<h2>📄 Page-Level Fix Plan</h2>
-<ul>
-<li><b>Homepage</b> → Missing H1, weak keywords</li>
-<li><b>Menu Page</b> → Duplicate titles, thin content</li>
-<li><b>Location Page</b> → No geo keywords</li>
-</ul>
-</div>
+  <div class="charts">
+    <div class="chart-card">
+      <h3>SEO Growth</h3>
+      <div class="chart-box"><canvas id="growthChart"></canvas></div>
+    </div>
 
-<!-- PRICING -->
-<div class="section" id="pricing" style="display:none;">
-<h2>💰 Purchase Recommended Toolkits</h2>
+    <div class="chart-card">
+      <h3>Issue Breakdown</h3>
+      <div class="chart-box"><canvas id="issueChart"></canvas></div>
+    </div>
 
-<div class="pricing">
+    <div class="chart-card">
+      <h3>Keyword Ranking Growth</h3>
+      <div class="chart-box"><canvas id="keywordChart"></canvas></div>
+    </div>
 
-<div class="price-card">
-<h3>1 Toolkit</h3>
-<div class="price">$99</div>
-<button class="demo-btn">Demo Only</button>
-</div>
+    <div class="chart-card">
+      <h3>Traffic Projection</h3>
+      <div class="chart-box"><canvas id="trafficChart"></canvas></div>
+    </div>
+  </div>
 
-<div class="price-card">
-<h3>2 Toolkits</h3>
-<div class="price">$198</div>
-<button class="demo-btn">Demo Only</button>
-</div>
+  <div id="toolkitsSection" style="display:none;">
+    <div class="section-title">🧠 AI-Selected Toolkits</div>
 
-<div class="price-card">
-<h3>3 Toolkits</h3>
-<div class="price">$249</div>
-<button class="demo-btn">Demo Only</button>
-</div>
+    <div class="toolkit-grid">
+      <div class="toolkit-card">
+        <h3>🔧 Technical SEO Toolkit</h3>
+        <ul>
+          <li>Fix metadata and indexing</li>
+          <li>Improve site speed</li>
+          <li>Resolve technical errors</li>
+          <li>Add schema where missing</li>
+        </ul>
+        <strong>Impact: +8 SEO score improvement</strong>
+      </div>
 
-</div>
+      <div class="toolkit-card">
+        <h3>📈 Content Optimization Toolkit</h3>
+        <ul>
+          <li>Improve keyword targeting</li>
+          <li>Expand thin content</li>
+          <li>Fix weak headings</li>
+          <li>Increase topical authority</li>
+        </ul>
+        <strong>Impact: +5 ranking gain</strong>
+      </div>
 
-<p style="font-size:13px;margin-top:10px;">
-Demo only — payments disabled
-</p>
+      <div class="toolkit-card">
+        <h3>📍 Local SEO Toolkit</h3>
+        <ul>
+          <li>Optimize location keywords</li>
+          <li>Improve Google Maps visibility</li>
+          <li>Strengthen geo signals</li>
+          <li>Improve local trust signals</li>
+        </ul>
+        <strong>Impact: +32% visibility</strong>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <div id="pageAnalysis" style="display:none;">
+    <div class="section-title">📄 Page-Level Issues & Fix Plan</div>
+
+    <div class="notice">
+      Showing 3 pages for demo. Full system scans up to <strong>25 pages</strong>, finds SEO issues page-by-page, maps each issue to the correct toolkit, and generates full step-by-step implementation instructions.
+    </div>
+
+    <div class="page-grid">
+      <div class="page-card">
+        <h3>Homepage</h3>
+        <ul>
+          <li>No optimized H1 → <strong>Content Optimization Toolkit</strong></li>
+          <li>Missing image alt text → <strong>Technical SEO Toolkit</strong></li>
+          <li>Weak local keywords → <strong>Local SEO Toolkit</strong></li>
+          <li>Thin homepage copy → <strong>Content Optimization Toolkit</strong></li>
+        </ul>
+      </div>
+
+      <div class="page-card">
+        <h3>Menu Page</h3>
+        <ul>
+          <li>Duplicate title tags → <strong>Technical SEO Toolkit</strong></li>
+          <li>Menu items lack keyword-rich descriptions → <strong>Content Optimization Toolkit</strong></li>
+          <li>No internal links to catering/location pages → <strong>Content Optimization Toolkit</strong></li>
+          <li>Food images missing alt text → <strong>Technical SEO Toolkit</strong></li>
+        </ul>
+      </div>
+
+      <div class="page-card">
+        <h3>Location Page</h3>
+        <ul>
+          <li>No geo-targeted keywords → <strong>Local SEO Toolkit</strong></li>
+          <li>Missing restaurant/local business schema → <strong>Technical SEO Toolkit</strong></li>
+          <li>Weak Google Maps relevance → <strong>Local SEO Toolkit</strong></li>
+          <li>Missing review/trust section → <strong>Local SEO Toolkit</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notice">
+      💡 Most websites require <strong>3–5 optimization cycles</strong> using AI SEO Brain to resolve the highest-impact issues, rescan, measure improvement, and continue optimizing toward peak performance.
+    </div>
+  </div>
+
+  <div id="pricingSection" style="display:none;">
+    <div class="section-title">💰 Recommended Toolkit Purchase</div>
+
+    <div class="notice">
+      The AI selected the top 3 toolkits for the best improvement. In the live system, Stripe payment links trigger fulfillment email delivery with the full report, purchased toolkit files, and page-by-page instructions.
+      <br><strong>Demo mode: checkout buttons are disabled.</strong>
+    </div>
+
+    <div class="pricing">
+      <div class="price-card">
+        <h3>1 Toolkit</h3>
+        <div class="price">$99</div>
+        <p>Choose the highest-priority toolkit for the biggest immediate issue.</p>
+        <button class="demo-btn" disabled>Demo Only</button>
+      </div>
+
+      <div class="price-card">
+        <h3>2 Toolkits</h3>
+        <div class="price">$198</div>
+        <p>Fix two major SEO categories and accelerate improvement.</p>
+        <button class="demo-btn" disabled>Demo Only</button>
+      </div>
+
+      <div class="price-card">
+        <h3>3 Toolkits</h3>
+        <div class="price">$249</div>
+        <p>Best value. Full recommended toolkit stack for maximum improvement.</p>
+        <button class="demo-btn" disabled>Demo Only</button>
+      </div>
+    </div>
+
+    <div class="small-note">
+      ✔ Stripe payment links in production<br>
+      ✔ Fulfillment email delivered after payment<br>
+      ✔ Includes report + selected toolkit instructions<br>
+      ✔ Full 25-page scan available in live product
+    </div>
+  </div>
 
 </div>
 
 <script>
+let charts = [];
 
-let charts=[];
+function createEmptyCharts() {
+  charts.forEach(chart => chart.destroy());
+  charts = [];
 
-function runScan(){
+  charts.push(new Chart(document.getElementById("growthChart"), {
+    type: "line",
+    data: {
+      labels: ["Current", "Scan 1", "Scan 2", "Scan 3"],
+      datasets: [{
+        label: "SEO Score",
+        data: [0, 0, 0, 0],
+        borderColor: "#16a34a",
+        backgroundColor: "rgba(22,163,74,.12)",
+        fill: true,
+        tension: 0.35
+      }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+  }));
 
-document.getElementById("loader").style.display="block";
+  charts.push(new Chart(document.getElementById("issueChart"), {
+    type: "bar",
+    data: {
+      labels: ["Technical", "Content", "Local", "Authority"],
+      datasets: [{
+        label: "Issues",
+        data: [0, 0, 0, 0],
+        backgroundColor: ["#2563eb", "#16a34a", "#f97316", "#9333ea"]
+      }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+  }));
 
-// clear charts
-charts.forEach(c=>c.destroy());
-charts=[];
+  charts.push(new Chart(document.getElementById("keywordChart"), {
+    type: "line",
+    data: {
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      datasets: [{
+        label: "Ranking Position",
+        data: [0, 0, 0, 0],
+        borderColor: "#2563eb",
+        backgroundColor: "rgba(37,99,235,.12)",
+        fill: true,
+        tension: 0.35
+      }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+  }));
 
-setTimeout(()=>{
-
-document.getElementById("loader").style.display="none";
-
-document.getElementById("score").innerText="74";
-document.getElementById("projected").innerText="88";
-document.getElementById("improve").innerText="+14%";
-document.getElementById("issues").innerText="27";
-
-charts.push(new Chart(growth,{
-type:"line",
-data:{labels:["Now","Scan1","Scan2","Scan3"],
-datasets:[{data:[74,80,84,88]}]}
-}));
-
-charts.push(new Chart(issuesChart,{
-type:"bar",
-data:{labels:["Technical","Content","Local","Authority"],
-datasets:[{data:[40,30,20,10]}]}
-}));
-
-charts.push(new Chart(keywords,{
-type:"line",
-data:{labels:["Week1","Week2","Week3","Week4"],
-datasets:[{data:[50,40,28,18]}]}
-}));
-
-charts.push(new Chart(traffic,{
-type:"bar",
-data:{labels:["Current","Projected"],
-datasets:[{data:[1800,4200]}]}
-}));
-
-document.getElementById("toolkits").style.display="block";
-document.getElementById("pages").style.display="block";
-document.getElementById("pricing").style.display="block";
-
-},3000);
-
+  charts.push(new Chart(document.getElementById("trafficChart"), {
+    type: "bar",
+    data: {
+      labels: ["Current", "Projected"],
+      datasets: [{
+        label: "Traffic",
+        data: [0, 0],
+        backgroundColor: ["#94a3b8", "#2563eb"]
+      }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+  }));
 }
 
+function runScan() {
+  const overlay = document.getElementById("scanOverlay");
+  const scanText = document.getElementById("scanText");
+
+  document.getElementById("toolkitsSection").style.display = "none";
+  document.getElementById("pageAnalysis").style.display = "none";
+  document.getElementById("pricingSection").style.display = "none";
+
+  document.getElementById("score").innerText = "--";
+  document.getElementById("projected").innerText = "--";
+  document.getElementById("improvement").innerText = "--";
+  document.getElementById("issues").innerText = "--";
+
+  createEmptyCharts();
+
+  overlay.style.display = "flex";
+  scanText.innerText = "Initializing AI SEO Brain...";
+
+  setTimeout(() => { scanText.innerText = "Crawling website pages..."; }, 700);
+  setTimeout(() => { scanText.innerText = "Analyzing technical, content, local, and authority signals..."; }, 1400);
+  setTimeout(() => { scanText.innerText = "Selecting top 3 toolkits from 40+ SEO toolkit library..."; }, 2200);
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+
+    document.getElementById("score").innerText = "74";
+    document.getElementById("projected").innerText = "88";
+    document.getElementById("improvement").innerText = "+14%";
+    document.getElementById("issues").innerText = "27";
+
+    charts.forEach(chart => chart.destroy());
+    charts = [];
+
+    charts.push(new Chart(document.getElementById("growthChart"), {
+      type: "line",
+      data: {
+        labels: ["Current", "Scan 1", "Scan 2", "Scan 3"],
+        datasets: [{
+          label: "SEO Score",
+          data: [74, 80, 84, 88],
+          borderColor: "#16a34a",
+          backgroundColor: "rgba(22,163,74,.2)",
+          fill: true,
+          tension: 0.35
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    }));
+
+    charts.push(new Chart(document.getElementById("issueChart"), {
+      type: "bar",
+      data: {
+        labels: ["Technical", "Content", "Local", "Authority"],
+        datasets: [{
+          label: "Issues",
+          data: [40, 30, 20, 10],
+          backgroundColor: ["#2563eb", "#16a34a", "#f97316", "#9333ea"]
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    }));
+
+    charts.push(new Chart(document.getElementById("keywordChart"), {
+      type: "line",
+      data: {
+        labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+        datasets: [{
+          label: "Ranking Position",
+          data: [52, 40, 28, 18],
+          borderColor: "#2563eb",
+          backgroundColor: "rgba(37,99,235,.18)",
+          fill: true,
+          tension: 0.35
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    }));
+
+    charts.push(new Chart(document.getElementById("trafficChart"), {
+      type: "bar",
+      data: {
+        labels: ["Current", "Projected"],
+        datasets: [{
+          label: "Traffic",
+          data: [1800, 4200],
+          backgroundColor: ["#94a3b8", "#2563eb"]
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    }));
+
+    document.getElementById("toolkitsSection").style.display = "block";
+    document.getElementById("pageAnalysis").style.display = "block";
+    document.getElementById("pricingSection").style.display = "block";
+  }, 3000);
+}
+
+createEmptyCharts();
 </script>
 
 </body>

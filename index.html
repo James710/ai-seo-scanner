@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial;
-      background: #f4f7fb;
+      background: #f5f7fb;
       margin: 0;
       padding: 20px;
       color: #1e293b;
@@ -16,50 +16,52 @@
     .header {
       background: #1e3a5f;
       color: white;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
     }
 
     input {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border-radius: 6px;
       border: none;
+      font-size: 14px;
     }
 
     button {
       background: #2563eb;
       color: white;
       border: none;
-      padding: 10px 16px;
+      padding: 12px 18px;
       border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
     }
 
     .banner {
-      margin-top: 20px;
-      padding: 16px;
       background: #e0f2fe;
+      padding: 18px;
       border-left: 6px solid #2563eb;
       border-radius: 8px;
+      margin-bottom: 20px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-      margin-top: 20px;
     }
 
     .card {
       background: white;
-      padding: 15px;
+      padding: 18px;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
     }
 
     .metric {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
       margin-top: 10px;
     }
@@ -69,14 +71,13 @@
     .blue { color: #2563eb; }
 
     .section {
-      margin-top: 20px;
+      margin-top: 25px;
     }
 
     canvas {
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
+      height: 300px !important;
     }
+
   </style>
 </head>
 
@@ -87,21 +88,21 @@
 
   <div style="display:flex; gap:10px; margin-top:10px;">
     <input value="https://www.eazydrivemarketing.com/">
-    <button onclick="runScan()">Run AI Scan</button>
+    <button>Run AI Scan</button>
   </div>
 </div>
 
 <div class="banner">
   <strong>Enterprise Demo Mode</strong><br><br>
-  This dashboard simulates the full AI SEO Brain platform:
-  <br>• 25-page crawl scanning
-  <br>• Technical SEO audit
-  <br>• AI keyword modeling
-  <br>• Page-level optimization engine
-  <br>• Toolkit recommendation system
-  <br>• Before vs After projections
-  <br>• Traffic + ranking forecasting
-  <br>• Full enterprise report generation (8 pages)
+  This system represents a full AI SEO platform:
+  • Multi-page crawl (25 pages)<br>
+  • Technical SEO audit<br>
+  • AI keyword modeling<br>
+  • Page-level optimization engine<br>
+  • Toolkit recommendation system<br>
+  • Before vs After projections<br>
+  • Traffic + ranking forecasting<br>
+  • Full enterprise reporting (8 pages)
 </div>
 
 <div class="grid">
@@ -146,51 +147,19 @@
   <canvas id="trafficChart"></canvas>
 </div>
 
-<div class="section card">
-  <h3>Selected Toolkits</h3>
-  <ul>
-    <li>Technical SEO Toolkit → +8 score improvement</li>
-    <li>Content Optimization Toolkit → +5 ranking boost</li>
-    <li>Local SEO Toolkit → +32% visibility increase</li>
-  </ul>
-</div>
-
-<div class="section card">
-  <h3>Critical Issues</h3>
-  <ul>
-    <li>Missing meta descriptions (12 pages)</li>
-    <li>No H1 tags on key pages</li>
-    <li>18 images missing alt text</li>
-    <li>Slow load speed (3.8s)</li>
-    <li>Duplicate titles detected</li>
-    <li>Poor keyword usage</li>
-    <li>Weak internal linking</li>
-  </ul>
-</div>
-
-<div class="section card">
-  <h3>Page-Level AI Optimization</h3>
-
-  <b>Homepage</b><br>
-  Keyword: Digital Marketing San Diego<br>
-  Fix: Add H1, expand content, improve keyword placement<br><br>
-
-  <b>Services Page</b><br>
-  Keyword: SEO Services San Diego<br>
-  Fix: Add FAQs, improve headings, increase content depth
-</div>
-
 <script>
-function runScan() {
+
+// ✅ Charts now load instantly (not on button click)
 
 new Chart(document.getElementById('growthChart'), {
   type: 'line',
   data: {
     labels: ['Before', 'After'],
     datasets: [{
-      label: 'SEO Score',
+      label: 'SEO Score Growth',
       data: [85, 100],
-      borderColor: 'green'
+      borderColor: '#16a34a',
+      tension: 0.3
     }]
   }
 });
@@ -200,7 +169,7 @@ new Chart(document.getElementById('issueChart'), {
   data: {
     labels: ['Technical', 'Content', 'Local', 'Authority'],
     datasets: [{
-      label: 'Issues',
+      label: 'Issues Fixed',
       data: [30, 25, 20, 15],
       backgroundColor: ['#2563eb','#16a34a','#f97316','#9333ea']
     }]
@@ -212,9 +181,10 @@ new Chart(document.getElementById('keywordChart'), {
   data: {
     labels: ['Week 1','Week 2','Week 3','Week 4'],
     datasets: [{
-      label: 'Keyword Rank',
-      data: [52, 40, 28, 12],
-      borderColor: 'green'
+      label: 'Keyword Rank Improvement',
+      data: [52, 38, 24, 10],
+      borderColor: '#2563eb',
+      tension: 0.4
     }]
   }
 });
@@ -224,14 +194,13 @@ new Chart(document.getElementById('trafficChart'), {
   data: {
     labels: ['Current','Projected'],
     datasets: [{
-      label: 'Traffic',
+      label: 'Monthly Traffic',
       data: [3200, 6800],
-      backgroundColor: ['#64748b','#2563eb']
+      backgroundColor: ['#94a3b8','#2563eb']
     }]
   }
 });
 
-}
 </script>
 
 </body>

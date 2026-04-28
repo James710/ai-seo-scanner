@@ -7,30 +7,35 @@
 
 <style>
 body {
-  font-family: Arial;
-  background: #0f172a;
-  color: #fff;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
   margin: 0;
   padding: 20px;
+  color: #1e293b;
 }
 
 .header {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
+  background: #1e3a5f;
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
   margin-bottom: 20px;
 }
 
-input {
+.header input {
   padding: 10px;
-  width: 300px;
+  width: 350px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 10px;
 }
 
-button {
-  padding: 10px 15px;
+.header button {
+  padding: 10px 18px;
   background: #2563eb;
-  border: none;
   color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -47,17 +52,34 @@ button {
 }
 
 .card {
-  background: #1e293b;
-  padding: 15px;
-  border-radius: 10px;
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 h2 {
-  margin-top: 0;
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #475569;
 }
+
+.metric {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.green { color: #16a34a; }
+.blue { color: #2563eb; }
+.orange { color: #f97316; }
 
 ul {
   padding-left: 20px;
+}
+
+.small {
+  font-size: 13px;
+  color: #64748b;
 }
 </style>
 </head>
@@ -67,11 +89,11 @@ ul {
 <div class="header">
   <h1>AI SEO Brain — Enterprise Dashboard</h1>
 
-  <input id="url" value="https://www.eazydrivemarketing.com/">
+  <input value="https://www.eazydrivemarketing.com/">
   <button onclick="runScan()">Run AI Scan</button>
 
-  <div style="margin-top:10px; font-size:13px; color:#94a3b8;">
-    ⚠ Enterprise Demo Mode: Simulated full AI SEO system (25-page crawl, AI scoring, keyword modeling, forecasting)
+  <div class="small">
+    ⚠ Enterprise Demo Mode — Simulated output of full AI SEO Brain (25-page crawl, keyword modeling, projections)
   </div>
 </div>
 
@@ -79,22 +101,22 @@ ul {
 
   <div class="card">
     <h2>SEO Score</h2>
-    <h1 id="score">85</h1>
+    <div class="metric orange">85</div>
   </div>
 
   <div class="card">
     <h2>Projected Score</h2>
-    <h1>100</h1>
+    <div class="metric green">100</div>
   </div>
 
   <div class="card">
     <h2>Improvement</h2>
-    <h1>+15%</h1>
+    <div class="metric blue">+15%</div>
   </div>
 
   <div class="card">
     <h2>Issues Found</h2>
-    <h1>7</h1>
+    <div class="metric">7</div>
   </div>
 
 </div>
@@ -136,9 +158,9 @@ ul {
 <div class="card">
   <h2>Selected Toolkits</h2>
   <ul>
-    <li>Technical SEO Toolkit — Fix metadata, structure, indexing</li>
-    <li>Content Optimization Toolkit — Improve keyword targeting + content depth</li>
-    <li>Local SEO Toolkit — Improve local rankings + authority</li>
+    <li>Technical SEO Toolkit — Fix metadata, indexing, structure</li>
+    <li>Content Optimization Toolkit — Improve keyword targeting</li>
+    <li>Local SEO Toolkit — Boost local rankings</li>
   </ul>
 </div>
 
@@ -147,9 +169,9 @@ ul {
 <div class="card">
   <h2>Toolkit Impact Forecast</h2>
   <ul>
-    <li>Technical SEO → +8 score improvement</li>
-    <li>Content Optimization → +5 ranking positions</li>
-    <li>Local SEO → +32% visibility increase</li>
+    <li>Technical SEO → +8 score</li>
+    <li>Content Optimization → +5 ranking gain</li>
+    <li>Local SEO → +32% visibility</li>
   </ul>
 </div>
 
@@ -158,13 +180,13 @@ ul {
 <div class="card">
   <h2>Critical Issues</h2>
   <ul>
-    <li>Missing meta descriptions on 12 pages</li>
-    <li>No H1 tags on 5 pages</li>
+    <li>Missing meta descriptions (12 pages)</li>
+    <li>No H1 tags on key pages</li>
     <li>18 images missing alt text</li>
-    <li>Slow page speed (3.8s load)</li>
-    <li>Duplicate title tags</li>
-    <li>Weak keyword targeting</li>
-    <li>Low internal linking</li>
+    <li>Slow load speed (3.8s)</li>
+    <li>Duplicate titles detected</li>
+    <li>Poor keyword usage</li>
+    <li>Weak internal linking</li>
   </ul>
 </div>
 
@@ -187,54 +209,33 @@ ul {
 
 <div class="card">
   <h2>Live Crawl Simulation</h2>
-  <div style="max-height:200px; overflow:auto; font-size:13px;">
-    <p>Scanning /</p>
-    <p>Scanning /services</p>
-    <p>Scanning /about</p>
-    <p>Scanning /contact</p>
-    <p>Scanning /seo</p>
-    <p>Scanning /blog</p>
-    <p>Scanning /pricing</p>
-    <p>Scanning /portfolio</p>
-    <p>Scanning /faq</p>
-    <p>Scanning /landing-1</p>
-    <p>Scanning /landing-2</p>
-    <p>Scanning /landing-3</p>
-    <p>Scanning /landing-4</p>
-    <p>Scanning /landing-5</p>
-    <p>Scanning /resources</p>
-    <p>Scanning /guides</p>
-    <p>Scanning /seo-checklist</p>
-    <p>Scanning /local</p>
-    <p>Scanning /industries</p>
-    <p>Scanning /real-estate</p>
-    <p>Scanning /medical</p>
+  <div class="small">
+    Scanned 25 pages including services, blog, landing pages, and SEO content structure
   </div>
-  <p><strong>25 pages scanned</strong></p>
 </div>
 
 <br>
 
 <div class="card">
   <h2>Enterprise Report Preview</h2>
-  <p>Executive Summary → Technical Audit → Keyword Strategy → Page Optimization → Toolkit Plan → Forecast</p>
+  <p class="small">
+    Executive Summary → Technical Audit → Keyword Strategy → Page Optimization → Toolkit Plan → Forecast
+  </p>
 </div>
 
 <script>
-
 function runScan() {
-  alert("Demo scan complete");
+  alert("Enterprise scan simulation complete");
 }
 
-// Charts
 new Chart(document.getElementById("growthChart"), {
   type: "line",
   data: {
     labels: ["Before","After"],
     datasets: [{
-      label: "SEO Score",
       data: [85,100],
-      borderColor: "#10b981"
+      borderColor: "#16a34a",
+      tension: 0.3
     }]
   }
 });
@@ -245,7 +246,7 @@ new Chart(document.getElementById("issueChart"), {
     labels: ["Technical","Content","Local","Authority"],
     datasets: [{
       data: [30,25,20,15],
-      backgroundColor: ["blue","green","orange","purple"]
+      backgroundColor: ["#2563eb","#16a34a","#f97316","#9333ea"]
     }]
   }
 });
@@ -253,10 +254,10 @@ new Chart(document.getElementById("issueChart"), {
 new Chart(document.getElementById("keywordChart"), {
   type: "line",
   data: {
-    labels: ["Week1","Week2","Week3","Week4"],
+    labels: ["W1","W2","W3","W4"],
     datasets: [{
       data: [52,38,25,12],
-      borderColor: "#10b981"
+      borderColor: "#16a34a"
     }]
   }
 });
@@ -271,7 +272,6 @@ new Chart(document.getElementById("trafficChart"), {
     }]
   }
 });
-
 </script>
 
 </body>

@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI SEO Scanner</title>
+  <title>AI SEO Brain</title>
+
   <style>
     body {
       font-family: Arial;
       background: #0f172a;
       color: white;
+      margin: 0;
+    }
+
+    .container {
+      padding: 30px;
+    }
+
+    h1 {
       text-align: center;
-      padding: 50px;
+    }
+
+    .input-box {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     input {
@@ -28,48 +41,112 @@
       cursor: pointer;
     }
 
-    .result {
-      margin-top: 30px;
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
     }
 
     .score {
       font-size: 48px;
       color: #22c55e;
     }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .ai-box {
+      color: #38bdf8;
+    }
   </style>
 </head>
+
 <body>
 
-  <h1>AI SEO Scanner</h1>
+<div class="container">
 
-  <input id="url" placeholder="Enter website URL" />
-  <button onclick="scan()">Scan</button>
+  <h1>AI SEO Brain Dashboard</h1>
 
-  <div class="result" id="result"></div>
+  <div class="input-box">
+    <input id="url" placeholder="Enter website URL" />
+    <button onclick="scan()">Run AI Scan</button>
+  </div>
 
-  <script>
-    async function scan() {
-      const url = document.getElementById("url").value;
+  <div class="grid">
 
-      const res = await fetch("http://localhost:5000/scan", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url })
-      });
+    <div class="card">
+      <h2>SEO Score</h2>
+      <div id="score" class="score">--</div>
+    </div>
 
-      const data = await res.json();
+    <div class="card">
+      <h2>Issues Detected</h2>
+      <ul id="issues"></ul>
+    </div>
 
-      let html = `<div class="score">Score: ${data.score}</div><ul>`;
-      data.issues.forEach(issue => {
-        html += `<li>${issue}</li>`;
-      });
-      html += "</ul>";
+    <div class="card">
+      <h2>AI Insights</h2>
+      <div id="ai" class="ai-box">
+        Waiting for scan...
+      </div>
+    </div>
 
-      document.getElementById("result").innerHTML = html;
-    }
-  </script>
+    <div class="card">
+      <h2>System Modules</h2>
+      <ul>
+        <li>Keyword Optimization Engine</li>
+        <li>Technical SEO Analyzer</li>
+        <li>Competitor Intelligence</li>
+        <li>Content Recommendation Engine</li>
+        <li>Local SEO Enhancer</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+async function scan() {
+  const url = document.getElementById("url").value;
+
+  const res = await fetch("http://localhost:5000/scan", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ url })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("score").innerText = data.score;
+
+  const issuesEl = document.getElementById("issues");
+  issuesEl.innerHTML = "";
+  data.issues.forEach(i => {
+    issuesEl.innerHTML += `<li>${i}</li>`;
+  });
+
+  // 🔥 Simulated AI Brain Output
+  document.getElementById("ai").innerHTML = `
+    Based on scan results, this system would:
+    <br><br>
+    • Optimize missing meta tags for ranking improvement  
+    • Improve content structure (H1 usage)  
+    • Enhance image SEO via alt attributes  
+    • Deploy keyword targeting strategy  
+    • Trigger content + backlink optimization workflows  
+  `;
+}
+</script>
 
 </body>
 </html>

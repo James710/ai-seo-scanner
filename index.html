@@ -7,11 +7,10 @@
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
+  font-family: Arial;
+  background: #f4f6fb;
   margin: 0;
   padding: 20px;
-  color: #1e293b;
 }
 
 .header {
@@ -19,13 +18,12 @@ body {
   color: white;
   padding: 25px;
   border-radius: 12px;
-  margin-bottom: 20px;
 }
 
 .scan-row {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 input {
@@ -33,7 +31,6 @@ input {
   padding: 12px;
   border-radius: 6px;
   border: none;
-  font-size: 15px;
 }
 
 button {
@@ -43,27 +40,37 @@ button {
   padding: 12px 18px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
 }
 
 .banner {
+  margin-top: 15px;
   background: #e0f2fe;
-  padding: 18px;
+  padding: 16px;
   border-left: 6px solid #2563eb;
   border-radius: 8px;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.hidden {
-  display: none;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4,1fr);
   gap: 15px;
+  margin-top: 20px;
 }
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.metric {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.orange { color:#f97316 }
+.green { color:#16a34a }
+.blue { color:#2563eb }
 
 .charts {
   display: grid;
@@ -72,288 +79,149 @@ button {
   margin-top: 20px;
 }
 
-.card {
-  background: white;
-  padding: 18px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-}
+canvas { height:260px !important; }
 
-.metric {
-  font-size: 32px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.orange { color: #f97316; }
-.green { color: #16a34a; }
-.blue { color: #2563eb; }
-
-.section-title {
-  margin-top: 28px;
-  margin-bottom: 12px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-canvas {
-  height: 250px !important;
-}
+.hidden { display:none }
 
 .loader {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  font-weight: bold;
+  margin-top:20px;
+  padding:20px;
+  background:white;
+  border-radius:10px;
+  font-weight:bold;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <h1>📊 AI SEO Brain — Enterprise Dashboard</h1>
+  <h2>📊 AI SEO Brain — Enterprise Dashboard</h2>
 
   <div class="scan-row">
-    <input id="websiteInput" value="https://www.coopsbbq.com/">
-    <button onclick="runScan()">🚀 Run AI Scan</button>
+    <input id="url" value="https://www.coopsbbq.com/">
+    <button onclick="scan()">🚀 Run AI Scan</button>
   </div>
 </div>
 
 <div class="banner">
-  <strong>⚙️ Enterprise Demo Mode</strong><br><br>
-  This dashboard represents the full AI SEO Brain platform in portfolio/demo form. The real system scans up to 25 pages per website, analyzes technical SEO, content SEO, local SEO, authority signals, page-level optimization opportunities, and chooses from <strong>40+ SEO toolkits</strong>. It then recommends the top 3 toolkits, creates an instructional implementation guide, forecasts before/after performance, and generates a full 8-page enterprise AI SEO report.
+<b>Enterprise Demo Mode</b><br><br>
+AI SEO Brain scans up to 25 pages, analyzes technical + content + local SEO, selects from 40+ toolkits, and generates full enterprise SEO reports with projections and page-level fixes.
 </div>
 
+<!-- LOADER -->
 <div id="loader" class="loader hidden">
-  Scanning website... analyzing pages, keywords, issues, toolkits, and projections.
+Scanning website… analyzing pages, keywords, toolkits, and ranking projections…
 </div>
 
+<!-- RESULTS -->
 <div id="results" class="hidden">
 
-  <div class="grid">
-    <div class="card">📈 SEO Score<div id="score" class="metric orange">--</div></div>
-    <div class="card">🎯 Projected Score<div id="projected" class="metric green">--</div></div>
-    <div class="card">⚡ Improvement<div id="improvement" class="metric blue">--</div></div>
-    <div class="card">⚠ Issues Found<div id="issuesCount" class="metric">--</div></div>
-  </div>
+<div class="grid">
+<div class="card">SEO Score<div id="score" class="metric orange">82</div></div>
+<div class="card">Projected Score<div id="projected" class="metric green">91</div></div>
+<div class="card">Improvement<div id="improvement" class="metric blue">+9%</div></div>
+<div class="card">Issues Found<div id="issues" class="metric">8</div></div>
+</div>
 
-  <div class="section-title">📊 Performance Analytics</div>
+<div class="charts">
+<div class="card"><b>SEO Growth</b><canvas id="c1"></canvas></div>
+<div class="card"><b>Issue Breakdown</b><canvas id="c2"></canvas></div>
+<div class="card"><b>Keyword Growth</b><canvas id="c3"></canvas></div>
+<div class="card"><b>Traffic Projection</b><canvas id="c4"></canvas></div>
+</div>
 
-  <div class="charts">
-    <div class="card">
-      <b>SEO Growth Projection</b>
-      <canvas id="growthChart"></canvas>
-    </div>
+<div class="card" style="margin-top:20px">
+<b>Selected Toolkits</b><br><br>
+✔ Local SEO Toolkit — Improve map rankings<br>
+✔ Content Optimization Toolkit — Target keywords<br>
+✔ Authority Toolkit — Improve trust + backlinks
+</div>
 
-    <div class="card">
-      <b>Issue Breakdown</b>
-      <canvas id="issueChart"></canvas>
-    </div>
-
-    <div class="card">
-      <b>Keyword Ranking Growth</b>
-      <canvas id="keywordChart"></canvas>
-    </div>
-
-    <div class="card">
-      <b>Traffic Projection</b>
-      <canvas id="trafficChart"></canvas>
-    </div>
-  </div>
-
-  <div class="section-title">🧠 Selected Toolkits</div>
-  <div id="toolkits" class="card"></div>
-
-  <div class="section-title">🚨 Critical Issues</div>
-  <div id="criticalIssues" class="card"></div>
-
-  <div class="section-title">📄 Page-Level AI Optimization</div>
-  <div id="pageOutput" class="card"></div>
-
-  <div class="section-title">📘 Enterprise Report Preview</div>
-  <div class="card">
-    Executive Summary → Technical Audit → Keyword Strategy → Page Optimization → Toolkit Plan → Forecast → 8-Page AI SEO Report
-  </div>
+<div class="card" style="margin-top:15px">
+<b>Critical Issues</b><br><br>
+• Missing local keywords<br>
+• Weak Google Business signals<br>
+• No schema markup<br>
+• Images missing alt text<br>
+• Weak internal linking
+</div>
 
 </div>
 
 <script>
-let growthChart, issueChart, keywordChart, trafficChart;
 
-function getDemoData(url) {
-  const lower = url.toLowerCase();
+let charts=[];
 
-  if (lower.includes("bbq") || lower.includes("restaurant") || lower.includes("coops")) {
-    return {
-      score: 82,
-      projected: 91,
-      issues: 8,
-      toolkits: [
-        "Local SEO Toolkit → Improve Google Maps rankings and local visibility",
-        "Content Optimization Toolkit → Target BBQ, restaurant, catering, and menu keywords",
-        "Reputation & Reviews Toolkit → Improve review volume, trust signals, and click-through rate"
-      ],
-      criticalIssues: [
-        "Missing location-based keywords such as BBQ restaurant and BBQ near me",
-        "Weak Google Business Profile alignment",
-        "Restaurant schema not detected",
-        "Menu page lacks keyword-rich descriptions",
-        "Food images missing optimized alt text",
-        "Limited review/reputation signals",
-        "Slow mobile performance",
-        "Weak internal linking between menu, location, and catering pages"
-      ],
-      pages: `
-        <b>Homepage</b><br>
-        Primary Keyword: BBQ Restaurant San Diego<br>
-        Recommended Title: Best BBQ Restaurant in San Diego | Coop’s BBQ<br>
-        Recommended Meta: Enjoy authentic BBQ, smoked meats, and local favorites at Coop’s BBQ in San Diego.<br>
-        Fixes: Add keyword-rich H1, local service area text, stronger CTA, and internal links.<br><br>
+function scan(){
 
-        <b>Menu Page</b><br>
-        Primary Keyword: Best BBQ Menu San Diego<br>
-        Recommended Title: BBQ Menu in San Diego | Ribs, Brisket, Chicken & Sides<br>
-        Recommended Meta: View Coop’s BBQ menu featuring smoked ribs, brisket, chicken, sides, and catering options.<br>
-        Fixes: Add menu schema, food image alt text, keyword-rich dish descriptions.<br><br>
+document.getElementById("results").classList.add("hidden");
+document.getElementById("loader").classList.remove("hidden");
 
-        <b>Location / Contact Page</b><br>
-        Primary Keyword: BBQ Near Me San Diego<br>
-        Recommended Title: Visit Coop’s BBQ | San Diego BBQ Restaurant<br>
-        Recommended Meta: Find Coop’s BBQ location, hours, contact information, and directions.<br>
-        Fixes: Add local business schema, embedded map, reviews section, and NAP consistency.
-      `
-    };
-  }
+setTimeout(()=>{
 
-  return {
-    score: 78,
-    projected: 88,
-    issues: 9,
-    toolkits: [
-      "Technical SEO Toolkit → Fix metadata, indexing, crawlability, schema, and site structure",
-      "Content Optimization Toolkit → Improve keyword targeting, headings, and page depth",
-      "Authority & Local SEO Toolkit → Improve visibility, citations, backlinks, and trust signals"
-    ],
-    criticalIssues: [
-      "Missing or weak meta descriptions on important pages",
-      "Poor H1/H2 heading structure",
-      "Images missing alt text",
-      "Limited keyword targeting on core landing pages",
-      "Weak internal linking between important pages",
-      "No structured data detected",
-      "Mobile performance needs improvement",
-      "Low authority and local trust signals",
-      "Content depth is below competitor standard"
-    ],
-    pages: `
-      <b>Homepage</b><br>
-      Primary Keyword: Business Services Near Me<br>
-      Recommended Title: Professional Services Built to Help Your Business Grow<br>
-      Recommended Meta: Improve visibility, traffic, and conversions with a stronger SEO and content strategy.<br>
-      Fixes: Add optimized H1, improve hero copy, add internal links, and strengthen CTA.<br><br>
+document.getElementById("loader").classList.add("hidden");
+document.getElementById("results").classList.remove("hidden");
 
-      <b>Services Page</b><br>
-      Primary Keyword: Professional Services<br>
-      Recommended Title: Services Designed to Improve Visibility and Lead Generation<br>
-      Recommended Meta: Explore services built to help businesses rank higher, attract traffic, and convert leads.<br>
-      Fixes: Add service sections, FAQs, keyword-rich headings, and schema markup.<br><br>
+charts.forEach(c=>c.destroy());
 
-      <b>Contact Page</b><br>
-      Primary Keyword: Contact Business Services<br>
-      Recommended Title: Contact Our Team | Request a Consultation<br>
-      Recommended Meta: Contact our team to request more information, pricing, or a consultation.<br>
-      Fixes: Add local schema, trust signals, form CTA, and business contact details.
-    `
-  };
+charts.push(new Chart(c1,{
+type:"line",
+data:{
+labels:["Current","Scan1","Scan2","Scan3"],
+datasets:[{
+label:"SEO Score",
+data:[82,87,89,91],
+borderColor:"#16a34a",
+backgroundColor:"rgba(22,163,74,0.2)",
+fill:true,
+tension:.4
+}]
+}
+}));
+
+charts.push(new Chart(c2,{
+type:"bar",
+data:{
+labels:["Technical","Content","Local","Authority"],
+datasets:[{
+label:"Issues",
+data:[30,25,20,15],
+backgroundColor:["#2563eb","#16a34a","#f97316","#9333ea"]
+}]
+}
+}));
+
+charts.push(new Chart(c3,{
+type:"line",
+data:{
+labels:["Week1","Week2","Week3","Week4"],
+datasets:[{
+label:"Ranking Position",
+data:[50,40,28,18],
+borderColor:"#2563eb",
+backgroundColor:"rgba(37,99,235,.2)",
+fill:true
+}]
+}
+}));
+
+charts.push(new Chart(c4,{
+type:"bar",
+data:{
+labels:["Current","Projected"],
+datasets:[{
+label:"Traffic",
+data:[2200,4200],
+backgroundColor:["#94a3b8","#2563eb"]
+}]
+}
+}));
+
+},900);
+
 }
 
-function runScan() {
-  const url = document.getElementById("websiteInput").value;
-  const data = getDemoData(url);
-
-  document.getElementById("loader").classList.remove("hidden");
-  document.getElementById("results").classList.add("hidden");
-
-  setTimeout(() => {
-    document.getElementById("loader").classList.add("hidden");
-    document.getElementById("results").classList.remove("hidden");
-
-    document.getElementById("score").innerText = data.score;
-    document.getElementById("projected").innerText = data.projected;
-    document.getElementById("improvement").innerText = "+" + (data.projected - data.score) + "%";
-    document.getElementById("issuesCount").innerText = data.issues;
-
-    document.getElementById("toolkits").innerHTML = data.toolkits.map(t => "✔ " + t).join("<br>");
-    document.getElementById("criticalIssues").innerHTML = data.criticalIssues.map(i => "• " + i).join("<br>");
-    document.getElementById("pageOutput").innerHTML = data.pages;
-
-    renderCharts(data);
-  }, 900);
-}
-
-function renderCharts(data) {
-  if (growthChart) growthChart.destroy();
-  if (issueChart) issueChart.destroy();
-  if (keywordChart) keywordChart.destroy();
-  if (trafficChart) trafficChart.destroy();
-
-  growthChart = new Chart(document.getElementById("growthChart"), {
-    type: "line",
-    data: {
-      labels: ["Current", "Scan 1", "Scan 2", "Scan 3"],
-      datasets: [{
-        label: "SEO Score Progression",
-        data: [data.score, data.projected, data.projected + 3, Math.min(data.projected + 6, 99)],
-        borderColor: "#16a34a",
-        backgroundColor: "rgba(22,163,74,0.15)",
-        fill: true,
-        tension: 0.4
-      }]
-    }
-  });
-
-  issueChart = new Chart(document.getElementById("issueChart"), {
-    type: "bar",
-    data: {
-      labels: ["Technical", "Content", "Local", "Authority"],
-      datasets: [{
-        label: "Issue Weight",
-        data: [30, 25, 22, 18],
-        backgroundColor: ["#2563eb", "#16a34a", "#f97316", "#9333ea"]
-      }]
-    }
-  });
-
-  keywordChart = new Chart(document.getElementById("keywordChart"), {
-    type: "line",
-    data: {
-      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-      datasets: [{
-        label: "Average Keyword Position",
-        data: [52, 41, 30, 18],
-        borderColor: "#2563eb",
-        backgroundColor: "rgba(37,99,235,0.12)",
-        fill: true,
-        tension: 0.4
-      }]
-    }
-  });
-
-  trafficChart = new Chart(document.getElementById("trafficChart"), {
-    type: "bar",
-    data: {
-      labels: ["Current", "Projected"],
-      datasets: [{
-        label: "Monthly Organic Visitors",
-        data: [2200, 4200],
-        backgroundColor: ["#94a3b8", "#2563eb"]
-      }]
-    }
-  });
-}
 </script>
 
 </body>

@@ -58,12 +58,12 @@
       color: #22c55e;
     }
 
-    ul {
-      padding-left: 20px;
+    .highlight {
+      color: #38bdf8;
     }
 
-    .ai-box {
-      color: #38bdf8;
+    ul {
+      padding-left: 20px;
     }
   </style>
 </head>
@@ -72,7 +72,7 @@
 
 <div class="container">
 
-  <h1>AI SEO Brain Dashboard</h1>
+  <h1>AI SEO Brain — Enterprise Dashboard</h1>
 
   <div class="input-box">
     <input id="url" placeholder="Enter website URL" />
@@ -87,26 +87,30 @@
     </div>
 
     <div class="card">
+      <h2>Projected Score (After Optimization)</h2>
+      <div id="projected" class="score">--</div>
+    </div>
+
+    <div class="card">
       <h2>Issues Detected</h2>
       <ul id="issues"></ul>
     </div>
 
     <div class="card">
-      <h2>AI Insights</h2>
-      <div id="ai" class="ai-box">
-        Waiting for scan...
-      </div>
+      <h2>Recommended Toolkits</h2>
+      <ul id="toolkits"></ul>
     </div>
 
     <div class="card">
-      <h2>System Modules</h2>
-      <ul>
-        <li>Keyword Optimization Engine</li>
-        <li>Technical SEO Analyzer</li>
-        <li>Competitor Intelligence</li>
-        <li>Content Recommendation Engine</li>
-        <li>Local SEO Enhancer</li>
-      </ul>
+      <h2>AI Insights</h2>
+      <div id="ai" class="highlight">Waiting for scan...</div>
+    </div>
+
+    <div class="card">
+      <h2>Enterprise Report Preview</h2>
+      <div id="report">
+        Run scan to generate report...
+      </div>
     </div>
 
   </div>
@@ -127,23 +131,57 @@ async function scan() {
 
   const data = await res.json();
 
+  // Score
   document.getElementById("score").innerText = data.score;
 
+  // Projected Score (simulate improvement)
+  const projected = Math.min(data.score + 15, 100);
+  document.getElementById("projected").innerText = projected;
+
+  // Issues
   const issuesEl = document.getElementById("issues");
   issuesEl.innerHTML = "";
   data.issues.forEach(i => {
     issuesEl.innerHTML += `<li>${i}</li>`;
   });
 
-  // 🔥 Simulated AI Brain Output
+  // Toolkits (simulate logic)
+  const toolkits = [];
+  if (data.score < 80) toolkits.push("Technical SEO Toolkit");
+  if (data.issues.length > 2) toolkits.push("Content Optimization Toolkit");
+  toolkits.push("Local SEO Toolkit");
+
+  const tkEl = document.getElementById("toolkits");
+  tkEl.innerHTML = "";
+  toolkits.forEach(t => {
+    tkEl.innerHTML += `<li>${t}</li>`;
+  });
+
+  // AI Insights
   document.getElementById("ai").innerHTML = `
-    Based on scan results, this system would:
+    AI identified ${data.issues.length} critical issues impacting search visibility.
     <br><br>
-    • Optimize missing meta tags for ranking improvement  
-    • Improve content structure (H1 usage)  
-    • Enhance image SEO via alt attributes  
-    • Deploy keyword targeting strategy  
-    • Trigger content + backlink optimization workflows  
+    System will prioritize:
+    <br>
+    • Meta optimization  
+    • Content structure improvements  
+    • Image SEO enhancements  
+    • Keyword targeting strategy  
+  `;
+
+  // Enterprise Report Preview
+  document.getElementById("report").innerHTML = `
+    <strong>Executive Summary:</strong><br>
+    Current SEO performance is below optimal standards.<br><br>
+
+    <strong>Key Issues:</strong><br>
+    ${data.issues.join("<br>")}<br><br>
+
+    <strong>Optimization Plan:</strong><br>
+    Apply selected toolkits to resolve technical and content gaps.<br><br>
+
+    <strong>Expected Impact:</strong><br>
+    Increase rankings, traffic, and conversion potential.
   `;
 }
 </script>

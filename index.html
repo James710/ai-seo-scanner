@@ -58,12 +58,6 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-h2 {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: #475569;
-}
-
 .metric {
   font-size: 28px;
   font-weight: bold;
@@ -72,10 +66,6 @@ h2 {
 .green { color: #16a34a; }
 .blue { color: #2563eb; }
 .orange { color: #f97316; }
-
-ul {
-  padding-left: 20px;
-}
 
 .small {
   font-size: 13px;
@@ -90,10 +80,10 @@ ul {
   <h1>AI SEO Brain — Enterprise Dashboard</h1>
 
   <input value="https://www.eazydrivemarketing.com/">
-  <button onclick="runScan()">Run AI Scan</button>
+  <button>Run AI Scan</button>
 
   <div class="small">
-    ⚠ Enterprise Demo Mode — Simulated output of full AI SEO Brain (25-page crawl, keyword modeling, projections)
+    ⚠ Enterprise Demo Mode — Simulated AI SEO Brain output (25-page crawl, keyword modeling, ranking projections)
   </div>
 </div>
 
@@ -142,12 +132,12 @@ ul {
 <div class="grid-2">
 
   <div class="card">
-    <h2>Keyword Ranking Growth</h2>
+    <h2>Keyword Ranking Improvement</h2>
     <canvas id="keywordChart"></canvas>
   </div>
 
   <div class="card">
-    <h2>Traffic Projection</h2>
+    <h2>Traffic Growth Forecast</h2>
     <canvas id="trafficChart"></canvas>
   </div>
 
@@ -156,22 +146,11 @@ ul {
 <br>
 
 <div class="card">
-  <h2>Selected Toolkits</h2>
+  <h2>Selected Toolkits Driving Growth</h2>
   <ul>
-    <li>Technical SEO Toolkit — Fix metadata, indexing, structure</li>
-    <li>Content Optimization Toolkit — Improve keyword targeting</li>
-    <li>Local SEO Toolkit — Boost local rankings</li>
-  </ul>
-</div>
-
-<br>
-
-<div class="card">
-  <h2>Toolkit Impact Forecast</h2>
-  <ul>
-    <li>Technical SEO → +8 score</li>
-    <li>Content Optimization → +5 ranking gain</li>
-    <li>Local SEO → +32% visibility</li>
+    <li>Technical SEO Toolkit → fixes indexing + boosts crawl efficiency</li>
+    <li>Content Optimization Toolkit → improves keyword ranking velocity</li>
+    <li>Local SEO Toolkit → increases visibility + conversion traffic</li>
   </ul>
 </div>
 
@@ -185,8 +164,8 @@ ul {
     <li>18 images missing alt text</li>
     <li>Slow load speed (3.8s)</li>
     <li>Duplicate titles detected</li>
-    <li>Poor keyword usage</li>
-    <li>Weak internal linking</li>
+    <li>Weak keyword targeting</li>
+    <li>Poor internal linking structure</li>
   </ul>
 </div>
 
@@ -197,21 +176,12 @@ ul {
 
   <p><strong>Homepage</strong></p>
   <p>Keyword: Digital Marketing San Diego</p>
-  <p>Fix: Add H1, expand content, improve keyword placement</p>
+  <p>Fix: Add H1, expand content, improve keyword density</p>
 
   <p><strong>Services Page</strong></p>
   <p>Keyword: SEO Services San Diego</p>
   <p>Fix: Add FAQs, improve headings, increase content depth</p>
 
-</div>
-
-<br>
-
-<div class="card">
-  <h2>Live Crawl Simulation</h2>
-  <div class="small">
-    Scanned 25 pages including services, blog, landing pages, and SEO content structure
-  </div>
 </div>
 
 <br>
@@ -224,54 +194,67 @@ ul {
 </div>
 
 <script>
-function runScan() {
-  alert("Enterprise scan simulation complete");
-}
 
+// SEO Growth (toolkits applied)
 new Chart(document.getElementById("growthChart"), {
   type: "line",
   data: {
-    labels: ["Before","After"],
-    datasets: [{
-      data: [85,100],
-      borderColor: "#16a34a",
-      tension: 0.3
-    }]
+    labels: ["Week 1","Week 2","Week 3","Week 4","Week 5"],
+    datasets: [
+      {
+        label: "Current SEO Score",
+        data: [85,86,87,88,89],
+        borderColor: "#f97316",
+        borderDash: [5,5]
+      },
+      {
+        label: "Projected (With Toolkits)",
+        data: [85,88,92,96,100],
+        borderColor: "#16a34a"
+      }
+    ]
   }
 });
 
+// Issue Breakdown (clean labels)
 new Chart(document.getElementById("issueChart"), {
   type: "bar",
   data: {
     labels: ["Technical","Content","Local","Authority"],
     datasets: [{
+      label: "Issue Count",
       data: [30,25,20,15],
       backgroundColor: ["#2563eb","#16a34a","#f97316","#9333ea"]
     }]
   }
 });
 
+// Keyword ranking (realistic downward improvement)
 new Chart(document.getElementById("keywordChart"), {
   type: "line",
   data: {
-    labels: ["W1","W2","W3","W4"],
+    labels: ["Week 1","Week 2","Week 3","Week 4","Week 5"],
     datasets: [{
-      data: [52,38,25,12],
+      label: "Avg Keyword Position",
+      data: [52,45,34,22,12],
       borderColor: "#16a34a"
     }]
   }
 });
 
+// Traffic growth (accelerating curve)
 new Chart(document.getElementById("trafficChart"), {
   type: "bar",
   data: {
-    labels: ["M1","M2","M3","M4"],
+    labels: ["Month 1","Month 2","Month 3","Month 4"],
     datasets: [{
-      data: [1200,2400,4200,6800],
+      label: "Projected Organic Traffic",
+      data: [1200,2800,5200,8200],
       backgroundColor: "#2563eb"
     }]
   }
 });
+
 </script>
 
 </body>
